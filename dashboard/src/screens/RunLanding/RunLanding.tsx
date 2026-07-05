@@ -43,8 +43,25 @@ export function RunLanding({ connection, loading = false, report }: RunLandingPr
         </div>
       ) : null}
       <div className="run-landing__hero">
-        <p className="run-landing__eyebrow">Local DriftRadar scan</p>
-        <h1 id="run-landing-title">{report.projectName}</h1>
+        <div className="run-landing__hero-copy">
+          <p className="run-landing__eyebrow">AI-native design-system gate</p>
+          <h1 id="run-landing-title">{report.projectName}</h1>
+          <p className="run-landing__lede">
+            DriftRadar scans live UI surfaces, compares them with local tokens, and uses AI to
+            propagate new style direction into reviewable fixes.
+          </p>
+          <div className="run-landing__actions">
+            <a className="button button--primary" href="#/issues">
+              Triage issues
+            </a>
+            <a className="button" href="#/walkthrough">
+              Start walkthrough
+            </a>
+            <a className="button" href="#/overview">
+              See summary
+            </a>
+          </div>
+        </div>
         <dl className="run-landing__metadata">
           <div>
             <dt>Run ID</dt>
@@ -59,18 +76,10 @@ export function RunLanding({ connection, loading = false, report }: RunLandingPr
             <dd>v{report.schemaVersion}</dd>
           </div>
         </dl>
-        <div className="run-landing__actions">
-          <a className="button button--primary" href="#/issues">
-            View issues
-          </a>
-          <a className="button" href="#/overview">
-            View overview
-          </a>
-        </div>
       </div>
       <div className="run-landing__stats" aria-label="Scan summary">
         <Stat label="Total issues" value={report.summary.totalIssues} />
-        <Stat label="Drift score" value={report.summary.driftScore} />
+        <Stat label="Drift risk" value={100 - report.summary.driftScore} />
         <Stat label="Routes scanned" value={routeCount} />
         <Stat label="Page captures" value={pageCount} />
         <Stat label="Screenshots" value={screenshotCount} />

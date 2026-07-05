@@ -54,6 +54,10 @@ describe("export markdown", () => {
     expect(markdown).toContain("Button uses literal blue");
     expect(markdown).toContain("Severity: high");
     expect(markdown).toContain("Route: buttons");
+    expect(markdown).toContain("Observed: `#1f6fe5`");
+    expect(markdown).toContain("Expected: `var(--color-primary-600)`");
+    expect(markdown).toContain("Screenshot: `screenshots/buttons/desktop/default.png`");
+    expect(markdown).toContain("Paste this into the PR");
     expect(markdown).toContain("The color is close to the token but hardcoded.");
     expect(markdown).toContain("Use the primary token.");
     expect(markdown).toContain("background: var(--color-primary-600);");
@@ -87,8 +91,14 @@ describe("ExportScreen", () => {
 
     render(<ExportScreen fetcher={fetcher} mode="fixture" report={report} />);
 
-    expect(await screen.findByText("Markdown source: fixture")).toBeTruthy();
+    expect(await screen.findByText(/Source:\s*fixture/)).toBeTruthy();
     expect(screen.getByLabelText("PR comment preview").textContent).toContain("fixture markdown");
+    expect(screen.getByLabelText("Review packet outcomes").textContent).toContain(
+      "1 copy-ready PR comments"
+    );
+    expect(screen.getByLabelText("Review packet outcomes").textContent).toContain(
+      "1 release-risk findings with fixes"
+    );
     expect(screen.getByLabelText("Severity summary").textContent).toContain("high: 1");
     expect(screen.getByLabelText("Category summary").textContent).toContain("token_misuse: 1");
 

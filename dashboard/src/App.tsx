@@ -12,9 +12,10 @@ import { ExportScreen } from "./screens/Export";
 import { IssueWorkbench } from "./screens/Issues/IssueWorkbench";
 import { Overview } from "./screens/Overview/Overview";
 import { RunLanding } from "./screens/RunLanding/RunLanding";
+import { Walkthrough } from "./screens/Walkthrough";
 import "./App.css";
 
-type Screen = "run" | "overview" | "issues" | "export";
+type Screen = "run" | "walkthrough" | "overview" | "issues" | "export";
 
 const loadingConnection: DashboardConnection = {
   mode: "disconnected",
@@ -34,8 +35,16 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, [screen]);
+
+  useEffect(() => {
     let ignore = false;
-    loadDashboardData({ runId: runIdFromSearch(window.location.search) }).then((nextData) => {
+    const searchParams = new URLSearchParams(window.location.search);
+    loadDashboardData({
+      fixtureOnly: searchParams.get("fixture") === "1",
+      runId: runIdFromSearch(window.location.search)
+    }).then((nextData) => {
       if (!ignore) {
         setData(nextData);
         setLoading(false);
@@ -53,6 +62,8 @@ export default function App() {
     <AppShell activeScreen={screen} connection={data.connection}>
       {screen === "run" ? (
         <RunLanding connection={data.connection} loading={loading} report={data.report} />
+      ) : screen === "walkthrough" && report ? (
+        <Walkthrough connection={data.connection} report={report} resolveAssetUrl={assetUrl} />
       ) : screen === "overview" && report ? (
         <Overview
           apiBaseUrl={data.connection.apiBaseUrl}
@@ -84,6 +95,7 @@ export default function App() {
 function PlaceholderScreen({ screen }: { screen: Exclude<Screen, "run"> }) {
   const copy = {
     overview: "Overview loads after a live or fixture report is available.",
+    walkthrough: "Walkthrough loads after a live or fixture report is available.",
     issues: "Issue workbench loads after a live or fixture report is available.",
     export: "Export loads PR-ready markdown from the backend or fixture."
   }[screen];
@@ -99,7 +111,7 @@ function PlaceholderScreen({ screen }: { screen: Exclude<Screen, "run"> }) {
 
 function screenFromHash(hash: string): Screen {
   const screen = hash.replace(/^#\/?/, "");
-  if (screen === "overview" || screen === "issues" || screen === "export") {
+  if (screen === "walkthrough" || screen === "overview" || screen === "issues" || screen === "export") {
     return screen;
   }
   return "run";

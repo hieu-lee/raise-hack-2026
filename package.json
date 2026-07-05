@@ -15,6 +15,7 @@
     "driftradar": "node dist/cli/index.js",
     "demo:backend": "node scripts/demo-backend.mjs",
     "demo:frontend": "node dashboard/scripts/demo-frontend.mjs",
+    "demo:record": "node dashboard/scripts/record-demo.mjs",
     "demo:serve": "node scripts/serve-latest.mjs",
     "smoke:frontend": "playwright test dashboard/tests/browser",
     "sample-app": "node scripts/serve-sample-app.mjs"

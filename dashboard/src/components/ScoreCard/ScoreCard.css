@@ -2,35 +2,51 @@
   display: grid;
   gap: 8px;
   min-width: 0;
-  padding: 17px 20px 18px;
-  border-top: 2px solid var(--dr-color-border-strong);
+  position: relative;
+  overflow: hidden;
+  padding: 20px 22px 22px;
+  border: 1px solid var(--dr-color-border);
   border-radius: var(--dr-radius-md);
   background: var(--dr-surface);
-  transition: background var(--dr-transition);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 5%) inset;
+  transition:
+    background var(--dr-transition),
+    border-color var(--dr-transition),
+    transform var(--dr-transition);
+}
+
+.score-card::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  content: "";
+  background: var(--dr-color-border-strong);
 }
 
 .score-card:hover {
   background: var(--dr-color-surface-raised);
+  border-color: var(--dr-color-border-strong);
+  transform: translateY(-2px);
 }
 
-.score-card--critical {
-  border-top-color: var(--dr-critical);
+.score-card--critical::before {
+  background: var(--dr-critical);
 }
 
-.score-card--high {
-  border-top-color: var(--dr-high);
+.score-card--high::before {
+  background: var(--dr-high);
 }
 
-.score-card--medium {
-  border-top-color: var(--dr-medium);
+.score-card--medium::before {
+  background: var(--dr-medium);
 }
 
-.score-card--low {
-  border-top-color: var(--dr-low);
+.score-card--low::before {
+  background: var(--dr-low);
 }
 
-.score-card--good {
-  border-top-color: var(--dr-good);
+.score-card--good::before {
+  background: var(--dr-good);
 }
 
 .score-card__label,
@@ -48,9 +64,10 @@
 
 .score-card__value {
   color: var(--dr-text);
-  font-size: clamp(1.7rem, 1.2rem + 1vw, 2.4rem);
-  font-weight: 700;
+  font-size: clamp(2rem, 1.35rem + 1.4vw, 3.2rem);
+  font-weight: 760;
   line-height: 1;
+  letter-spacing: -0.06em;
 }
 
 .score-card__detail {

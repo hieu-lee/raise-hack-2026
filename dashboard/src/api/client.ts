@@ -27,6 +27,7 @@ export interface DashboardData {
 export interface LoadDashboardOptions {
   apiBaseUrl?: string;
   runId?: string;
+  fixtureOnly?: boolean;
   fetcher?: typeof fetch;
 }
 
@@ -35,6 +36,10 @@ export async function loadDashboardData(
 ): Promise<DashboardData> {
   const apiBaseUrl = trimTrailingSlash(options.apiBaseUrl ?? DEFAULT_API_BASE_URL);
   const fetcher = options.fetcher ?? fetch;
+
+  if (options.fixtureOnly) {
+    return loadFixtureData(apiBaseUrl, fetcher);
+  }
 
   try {
     var health = await fetchJson<{ mutationToken?: string }>(`${apiBaseUrl}/api/health`, fetcher);
@@ -48,7 +53,7 @@ export async function loadDashboardData(
       fetcher
     );
     const runs = runsResponse.runs ?? [];
-    const runId = options.runId ?? runs[0]?.runId;
+    const runId = options.runId ?? newestRun(runs)?.runId;
 
     if (!runId) {
       return {
@@ -158,6 +163,12 @@ export async function fetchExportMarkdown(
 
 export function runIdFromSearch(search: string): string | undefined {
   return new URLSearchParams(search).get("runId") || undefined;
+}
+
+function newestRun(runs: RunSummary[]): RunSummary | undefined {
+  return [...runs].sort((left, right) =>
+    String(right.createdAt ?? "").localeCompare(String(left.createdAt ?? ""))
+  )[0];
 }
 
 async function fetchJson<T>(url: string, fetcher: typeof fetch): Promise<T> {

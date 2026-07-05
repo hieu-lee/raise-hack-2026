@@ -21,7 +21,7 @@ export function UnifiedDiff({ before = "", after = "", filePath }: UnifiedDiffPr
           <code>{filePath}</code>
         </header>
       ) : null}
-      <pre className="unified-diff__body">
+      <pre className="unified-diff__body" tabIndex={0}>
         <code>
           {lines.map((line, index) => (
             <div

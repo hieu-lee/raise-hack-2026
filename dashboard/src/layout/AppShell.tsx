@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Download, Home, LayoutDashboard, ListChecks, PlayCircle } from "lucide-react";
+import { Download, Home, LayoutDashboard, ListChecks, PlayCircle, Radio } from "lucide-react";
 import type { DashboardConnection } from "../api/client";
 import "./AppShell.css";
 
@@ -11,6 +11,7 @@ interface AppShellProps {
 
 const navItems = [
   { screen: "run", label: "Run", href: "#/", icon: PlayCircle },
+  { screen: "walkthrough", label: "Walkthrough", href: "#/walkthrough", icon: Radio },
   { screen: "overview", label: "Overview", href: "#/overview", icon: LayoutDashboard },
   { screen: "issues", label: "Issues", href: "#/issues", icon: ListChecks },
   { screen: "export", label: "Export", href: "#/export", icon: Download }

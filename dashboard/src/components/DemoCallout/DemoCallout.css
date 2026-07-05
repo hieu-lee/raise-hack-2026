@@ -1,17 +1,22 @@
 .demo-callout {
-  display: block;
+  display: grid;
+  gap: 0.15rem;
   margin: 0 0 1.25rem;
-  padding: 0.85rem 1rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--dr-color-border);
   border-left: 3px solid var(--dr-color-brand);
-  border-radius: var(--dr-radius-xs);
-  background: var(--dr-color-brand-soft);
+  border-radius: var(--dr-radius-md);
+  background:
+    radial-gradient(circle at 0% 0%, rgb(34 211 238 / 18%), transparent 16rem),
+    rgb(15 23 42 / 72%);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 5%) inset;
 }
 
 .demo-callout strong {
   display: block;
-  margin-bottom: 0.2rem;
+  margin: 0;
   color: var(--dr-color-brand-strong);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -20,6 +25,6 @@
 .demo-callout p {
   margin: 0;
   color: var(--dr-color-subtle);
-  font-size: 0.9rem;
+  font-size: 0.94rem;
   line-height: 1.5;
 }

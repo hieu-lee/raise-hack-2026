@@ -44,6 +44,15 @@ export function ExportScreen({
       : { markdown: fallbackMarkdown, reportKey, source: "fallback" as const };
   const severityCounts = useMemo(() => countBySeverity(report.issues), [report.issues]);
   const categoryCounts = useMemo(() => countByCategory(report.issues), [report.issues]);
+  const highRiskCount = (severityCounts.critical ?? 0) + (severityCounts.high ?? 0);
+  const sourceFiles = useMemo(
+    () => new Set(report.issues.map((issue) => issue.suggestedFix?.sourceFile).filter(Boolean)).size,
+    [report.issues]
+  );
+  const routeCount = useMemo(
+    () => new Set(report.issues.map((issue) => issue.routeId).filter(Boolean)).size,
+    [report.issues]
+  );
 
   useEffect(() => {
     let mounted = true;
@@ -72,18 +81,28 @@ export function ExportScreen({
       <DemoCallout kind="export" />
       <div className="export-screen__heading">
         <div>
-          <h2 id="export-title">Export PR comment</h2>
-          <p className="export-screen__source">Markdown source: {currentExport.source}</p>
+          <h2 id="export-title">Review packet</h2>
+          <p className="export-screen__source">
+            PR-ready evidence, unresolved risk, and suggested fixes. Source: {currentExport.source}
+          </p>
         </div>
         <div className="export-screen__actions" aria-label="Export actions">
           <CopyButton getText={() => currentExport.markdown} label="Copy all" />
           <button onClick={download} type="button">
-            Download markdown
+            Download packet
           </button>
         </div>
       </div>
 
       <div className="export-screen__summaries">
+        <section className="export-summary export-summary--outcome" aria-label="Review packet outcomes">
+          <p className="export-summary__title">What reviewers get</p>
+          <span className="export-summary__chip">{report.issues.length} copy-ready PR comments</span>
+          <span className="export-summary__chip">{highRiskCount} release-risk findings with fixes</span>
+          <span className="export-summary__chip">{routeCount} routes ready for async review</span>
+          <span className="export-summary__chip">{sourceFiles || "selector"} source hints, no meeting required</span>
+        </section>
+
         <section className="export-summary" aria-label="Severity summary">
           <p className="export-summary__title">Severity</p>
           {Object.entries(severityCounts).map(([severity, count]) => (
@@ -103,7 +122,7 @@ export function ExportScreen({
         </section>
       </div>
 
-      <pre aria-label="PR comment preview" className="export-screen__preview dr-code-scroll">
+      <pre aria-label="PR comment preview" className="export-screen__preview dr-code-scroll" tabIndex={0}>
         {currentExport.markdown}
       </pre>
 

@@ -21,7 +21,10 @@ a {
 
 .app-shell {
   min-height: 100vh;
-  background: var(--dr-color-canvas);
+  background:
+    radial-gradient(circle at 50% -10%, rgb(34 211 238 / 10%), transparent 28rem),
+    linear-gradient(180deg, rgb(15 23 42 / 58%), transparent 22rem),
+    transparent;
 }
 
 .app-shell__header {
@@ -32,10 +35,11 @@ a {
   grid-template-columns: minmax(180px, 1fr) auto auto;
   align-items: center;
   gap: var(--dr-space-7);
-  padding: var(--dr-space-4) clamp(var(--dr-space-6), 4vw, 48px);
+  padding: var(--dr-space-4) clamp(var(--dr-space-6), 4vw, 56px);
   border-bottom: 1px solid var(--dr-color-border);
-  background: rgb(25 25 25 / 85%);
-  backdrop-filter: blur(10px);
+  background: rgb(7 10 18 / 72%);
+  backdrop-filter: blur(22px) saturate(130%);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 4%);
 }
 
 .app-shell__brand {
@@ -43,6 +47,12 @@ a {
   align-items: center;
   gap: var(--dr-space-3);
   text-decoration: none;
+}
+
+.app-shell__brand strong {
+  display: block;
+  font-size: 0.98rem;
+  letter-spacing: -0.02em;
 }
 
 .app-shell__brand small {
@@ -53,13 +63,15 @@ a {
 
 .app-shell__mark {
   display: grid;
-  width: 32px;
-  height: 32px;
+  width: 38px;
+  height: 38px;
   flex-shrink: 0;
   place-items: center;
   border-radius: var(--dr-radius-sm);
-  background: linear-gradient(135deg, var(--dr-color-brand), #8a6df5);
-  color: #0b1220;
+  background:
+    radial-gradient(circle at 30% 20%, rgb(255 255 255 / 65%), transparent 0.45rem),
+    linear-gradient(135deg, var(--dr-color-brand), #8b5cf6);
+  color: #020617;
   font-size: 11px;
   font-weight: 800;
 }
@@ -67,12 +79,19 @@ a {
 .app-shell__nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 2px;
+  gap: 4px;
   justify-content: center;
+  border: 1px solid var(--dr-color-border);
+  border-radius: var(--dr-radius-pill);
+  padding: 4px;
+  background: rgb(15 23 42 / 58%);
+  box-shadow:
+    0 16px 48px rgb(0 0 0 / 18%),
+    0 1px 0 rgb(255 255 255 / 5%) inset;
 }
 
 .app-shell__nav a {
-  border-radius: var(--dr-radius-sm);
+  border-radius: var(--dr-radius-pill);
   padding: var(--dr-space-2) var(--dr-space-3);
   color: var(--dr-color-subtle);
   font-weight: 500;
@@ -80,24 +99,27 @@ a {
   text-decoration: none;
   transition:
     background var(--dr-transition),
-    color var(--dr-transition);
+    color var(--dr-transition),
+    transform var(--dr-transition);
 }
 
 .app-shell__nav a:hover {
-  background: var(--dr-color-surface-muted);
+  background: rgb(255 255 255 / 8%);
   color: var(--dr-color-text);
+  transform: translateY(-1px);
 }
 
 .app-shell__nav a[aria-current="page"] {
-  background: var(--dr-color-brand-soft);
-  color: var(--dr-color-brand-strong);
+  background: rgb(34 211 238 / 18%);
+  color: var(--dr-color-text);
   font-weight: 600;
+  box-shadow: 0 10px 28px rgb(34 211 238 / 12%);
 }
 
 .app-shell__main {
-  width: min(1320px, 100%);
+  width: min(1440px, 100%);
   margin: 0 auto;
-  padding: clamp(var(--dr-space-6), 3vw, 32px);
+  padding: clamp(var(--dr-space-6), 3vw, 40px);
 }
 
 .app-shell__nav a {
@@ -110,17 +132,12 @@ a {
   font-size: 0.82rem;
 }
 
-@media (max-width: 720px) {
-  .app-shell__nav-label {
-    display: none;
-  }
-}
-
 .connection-badge {
   justify-self: end;
   border-radius: var(--dr-radius-pill);
   padding: 5px var(--dr-space-3);
-  background: var(--dr-color-surface-muted);
+  border: 1px solid var(--dr-color-border);
+  background: rgb(15 23 42 / 72%);
   color: var(--dr-color-subtle);
   font-size: 12px;
   font-weight: 600;
@@ -128,32 +145,57 @@ a {
 }
 
 .connection-badge--live {
+  border-color: var(--dr-color-success-border);
   background: var(--dr-color-success-bg);
   color: var(--dr-color-success-text);
 }
 
 .connection-badge--fixture,
 .connection-badge--no-runs {
+  border-color: var(--dr-color-warning-border);
   background: var(--dr-color-warning-bg);
   color: var(--dr-color-warning-text);
 }
 
 .connection-badge--disconnected {
+  border-color: var(--dr-color-danger-border);
   background: var(--dr-color-danger-bg);
   color: var(--dr-color-danger-text);
 }
 
 @media (max-width: 720px) {
   .app-shell__header {
-    grid-template-columns: 1fr;
-    align-items: start;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--dr-space-4);
+    padding: var(--dr-space-4);
   }
 
   .app-shell__nav {
-    justify-content: start;
+    grid-column: 1 / -1;
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    justify-content: stretch;
+    border-radius: var(--dr-radius-lg);
+  }
+
+  .app-shell__nav a {
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0.6rem 0.35rem;
+  }
+
+  .app-shell__nav-label {
+    display: inline;
+    font-size: 0.68rem;
   }
 
   .connection-badge {
-    justify-self: start;
+    justify-self: end;
+  }
+
+  .app-shell__main {
+    padding: var(--dr-space-4);
   }
 }

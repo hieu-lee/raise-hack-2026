@@ -3,11 +3,17 @@
 }
 
 .screenshot-frame {
-  background: var(--dr-color-surface-muted);
+  border: 1px solid var(--dr-color-border);
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 7%), transparent),
+    rgb(2 6 23 / 72%);
   border-radius: var(--dr-radius-md);
   min-height: 220px;
   overflow: auto;
   position: relative;
+  box-shadow:
+    0 18px 56px rgb(0 0 0 / 20%),
+    0 1px 0 rgb(255 255 255 / 5%) inset;
 }
 
 .screenshot-frame img {
@@ -16,16 +22,20 @@
 }
 
 .crop-highlight {
-  border: 2px solid var(--dr-color-focus);
-  border-radius: 6px;
-  box-shadow: 0 0 0 9999px rgb(0 0 0 / 45%);
+  border: 2px solid #67e8f9;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 9999px rgb(2 6 23 / 42%),
+    0 0 0 3px rgb(34 211 238 / 24%),
+    0 0 34px rgb(34 211 238 / 50%);
   pointer-events: none;
   position: absolute;
 }
 
 .screenshot-viewer figcaption {
   color: var(--color-subtle);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
+  font-weight: 600;
   margin-top: 0.5rem;
 }
 
@@ -38,6 +48,7 @@
     var(--dr-color-surface-muted) 12px,
     var(--dr-color-surface-muted) 24px
   );
+  border: 1px solid var(--dr-color-border);
   border-radius: var(--dr-radius-md);
   color: var(--color-subtle);
   display: flex;

@@ -1,5 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import fixtureReport from "../../../public/fixtures/frontend-handoff-run/report.json";
 import type { ScanReport } from "../../types/report";
@@ -18,8 +18,8 @@ describe("Overview", () => {
     const severity = screen.getByLabelText("Severity counts");
     expect(within(severity).getByText("Critical")).toBeInTheDocument();
     expect(within(severity).getAllByText("1")).toHaveLength(4);
-    expect(screen.getByText("44")).toBeInTheDocument();
-    expect(screen.getByText("4 open findings across 5 routes")).toBeInTheDocument();
+    expect(screen.getByText("56")).toBeInTheDocument();
+    expect(screen.getByText("4 open findings across 5 routes. Lower is healthier.")).toBeInTheDocument();
   });
 
   it("shows highest-priority findings by severity then confidence", () => {
@@ -76,7 +76,7 @@ describe("Overview", () => {
   it("shows high drift scores as healthy", () => {
     render(<Overview report={{ ...report, summary: { ...report.summary, driftScore: 100 } }} />);
 
-    expect(screen.getByText("100").closest("article")).toHaveClass("score-card--good");
+    expect(screen.getByText("0").closest("article")).toHaveClass("score-card--good");
   });
 
   it("renders the zero-issue state", () => {
@@ -101,5 +101,62 @@ describe("Overview", () => {
     );
 
     expect(screen.getByText("No drift found")).toBeInTheDocument();
+  });
+
+  it("shows the style propagation agent requires live mode in fixtures", () => {
+    render(<Overview report={report} mode="fixture" />);
+
+    expect(screen.getByText("Style propagation agent")).toBeInTheDocument();
+    expect(screen.getByText("Live API required")).toBeInTheDocument();
+  });
+
+  it("renders an OpenAI-backed style propagation plan in live mode", async () => {
+    const fetcher = vi.fn(async () =>
+      new Response(
+        JSON.stringify({
+          status: "ready",
+          baseRef: "master",
+          headRef: "HEAD",
+          generatedAt: "2026-07-05T08:00:00.000Z",
+          source: "openai",
+          theme: "Liquid glass surfaces",
+          summary: "Propagate the new landing page style to the rest of the UI.",
+          evidence: ["+ backdrop-filter: blur(22px);"],
+          opportunities: [
+            {
+              component: "Issue cards",
+              currentEvidence: "Flat cards remain.",
+              recommendedChange: "Use translucent surfaces on issue cards.",
+              targetFiles: ["dashboard/src/screens/Issues/Issues.css"],
+              confidence: 0.9,
+              rationale: "The recent diff introduced liquid glass surfaces."
+            }
+          ],
+          nextActions: ["Patch issue cards"]
+        })
+      )
+    );
+    vi.stubGlobal("fetch", fetcher);
+
+    render(
+      <Overview
+        apiBaseUrl="http://localhost:4317"
+        mutationToken="token"
+        mode="live"
+        report={report}
+      />
+    );
+
+    expect(await screen.findByText("Liquid glass surfaces")).toBeInTheDocument();
+    expect(screen.getByText("OpenAI backed")).toBeInTheDocument();
+    expect(screen.getByText("Use translucent surfaces on issue cards.")).toBeInTheDocument();
+    expect(fetcher).toHaveBeenCalledWith(
+      "http://localhost:4317/api/runs/frontend-handoff-run/style-propagation",
+      expect.objectContaining({
+        headers: expect.objectContaining({ "X-DriftRadar-Token": "token" })
+      })
+    );
+
+    vi.unstubAllGlobals();
   });
 });

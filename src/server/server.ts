@@ -5,6 +5,7 @@ import { basename, extname, join, normalize, resolve } from "node:path";
 import { runCopilot, sanitizeHistory, type CopilotRequest } from "../ai/copilot.js";
 import { ensureIssueNames } from "../ai/issue-names.js";
 import { draftPullRequest } from "../ai/pr-draft.js";
+import { ensureStylePropagationPlan } from "../ai/style-propagation.js";
 import { renderPrComments } from "../export/pr-comments.js";
 import { reportSchema } from "../contracts/schemas.js";
 import type { DriftReport } from "../contracts/types.js";
@@ -183,6 +184,38 @@ export function createDashboardApp(options: ServerOptions = {}): express.Express
     }
 
     response.json(await getProjectReadiness(report));
+  });
+
+  app.get("/api/runs/:runId/style-propagation", async (request, response) => {
+    if (!requireDashboardMutation(request, response)) {
+      return;
+    }
+
+    const runDir = runDirectory(outputDir, request.params.runId);
+    const report = await readReport(outputDir, request.params.runId, response);
+    if (!report || !runDir) {
+      return;
+    }
+
+    try {
+      response.json(
+        await ensureStylePropagationPlan(report, runDir, {
+          baseRef:
+            typeof request.query.baseRef === "string" && request.query.baseRef.trim()
+              ? request.query.baseRef.trim()
+              : process.env.DRIFTRADAR_STYLE_BASE_REF,
+          headRef:
+            typeof request.query.headRef === "string" && request.query.headRef.trim()
+              ? request.query.headRef.trim()
+              : process.env.DRIFTRADAR_STYLE_HEAD_REF
+        })
+      );
+    } catch (error) {
+      response.status(502).json({
+        status: "error",
+        error: error instanceof Error ? error.message : "Style propagation failed"
+      });
+    }
   });
 
   app.post("/api/runs/:runId/project-readiness/prepare", async (request, response) => {

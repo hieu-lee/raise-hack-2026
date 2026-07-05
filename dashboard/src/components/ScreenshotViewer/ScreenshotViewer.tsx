@@ -28,12 +28,12 @@ export function ScreenshotViewer({
 
   return (
     <figure className="screenshot-viewer">
-      <div className="screenshot-frame">
+      <div className="screenshot-frame" tabIndex={0}>
         <img src={src} alt={alt} onError={() => setFailed(true)} />
         {cropBox ? (
           <span
             className="crop-highlight"
-            aria-label="Highlighted issue crop"
+            aria-hidden="true"
             style={{
               left: cropBox.x,
               top: cropBox.y,

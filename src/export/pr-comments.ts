@@ -15,7 +15,12 @@ export function renderPrComments(report: DriftReport): string {
   const lines = [
     `## DriftRadar report: ${report.projectName}`,
     "",
-    `Drift score: ${report.summary.driftScore}/100. ${report.summary.totalIssues} open issue(s).`,
+    `Drift risk: ${100 - report.summary.driftScore}/100. ${report.summary.totalIssues} open issue(s). Lower is healthier.`,
+    "",
+    "### Review packet outcome",
+    "",
+    "- Paste this into the PR to replace the design QA sync.",
+    "- Each finding carries severity, route, source hint, screenshot evidence, observed/expected values, confidence, and suggested fix.",
     ""
   ];
 
@@ -27,6 +32,17 @@ export function renderPrComments(report: DriftReport): string {
 
       for (const issue of issues) {
         lines.push(`- ${issue.title} (${issue.selectorHint})`);
+        lines.push(`  - Confidence: ${Math.round(issue.confidence * 100)}%`);
+        lines.push(`  - Observed: \`${issue.observedValue}\``);
+        if (issue.expectedValue) {
+          lines.push(`  - Expected: \`${issue.expectedValue}\``);
+        }
+        if (issue.evidence?.screenshotPath) {
+          lines.push(`  - Screenshot: \`${issue.evidence.screenshotPath}\``);
+        }
+        if (issue.evidence?.tokenDistance !== undefined) {
+          lines.push(`  - Token distance: ${issue.evidence.tokenDistance}`);
+        }
         lines.push(`  - ${issue.suggestedFix.humanInstruction}`);
 
         if (issue.suggestedFix.cssBefore || issue.suggestedFix.cssAfter) {

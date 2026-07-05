@@ -3,8 +3,10 @@
   gap: 14px;
   min-width: 0;
   padding: 20px;
+  border: 1px solid var(--dr-color-border);
   border-radius: var(--dr-radius-md);
   background: var(--dr-surface);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 5%) inset;
 }
 
 .summary-bar__header,
@@ -46,7 +48,7 @@
   height: 10px;
   overflow: hidden;
   border-radius: 999px;
-  background: var(--dr-track);
+  background: rgb(148 163 184 / 14%);
 }
 
 .summary-bar__fill {
@@ -54,6 +56,7 @@
   inset: 0 auto 0 0;
   border-radius: inherit;
   background: var(--dr-accent);
+  box-shadow: 0 0 18px rgb(34 211 238 / 22%);
 }
 
 .summary-bar__fill--critical {

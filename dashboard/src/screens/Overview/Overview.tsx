@@ -1,8 +1,13 @@
 import { ScoreCard } from "../../components/ScoreCard/ScoreCard";
 import { SummaryBar } from "../../components/SummaryBar/SummaryBar";
+import {
+  fetchStylePropagationPlan,
+  type StylePropagationPlan
+} from "../../api/mutations";
 import { useIssueNames, issueLabel } from "../../hooks/useIssueNames";
 import { severityOrder, sortIssues } from "../../lib/filtering/filtering";
 import type { IssueCategory, IssueSeverity, ScanReport } from "../../types/report";
+import { useEffect, useState } from "react";
 import "./Overview.css";
 
 type OverviewProps = {
@@ -47,6 +52,7 @@ const issueHref = (runId: string, issueId: string) => {
 };
 
 export function Overview({ apiBaseUrl, mutationToken, report, mode = "fixture" }: OverviewProps) {
+  const [stylePlan, setStylePlan] = useState<StylePropagationPlan | undefined>();
   const issueNames = useIssueNames(
     apiBaseUrl,
     report.runId,
@@ -69,6 +75,22 @@ export function Overview({ apiBaseUrl, mutationToken, report, mode = "fixture" }
     Object.entries(report.summary.countsByCategory) as Array<[IssueCategory, number]>
   ).map(([category, value]) => ({ label: categoryLabels[category], value }));
 
+  useEffect(() => {
+    let ignore = false;
+    if (!apiBaseUrl || mode !== "live") {
+      setStylePlan(undefined);
+      return;
+    }
+
+    void fetchStylePropagationPlan(apiBaseUrl, report.runId, mutationToken).then((plan) => {
+      if (!ignore) setStylePlan(plan);
+    });
+
+    return () => {
+      ignore = true;
+    };
+  }, [apiBaseUrl, mode, mutationToken, report.runId]);
+
   return (
     <section className="overview">
       {mode === "fixture" ? (
@@ -85,9 +107,9 @@ export function Overview({ apiBaseUrl, mutationToken, report, mode = "fixture" }
           </p>
         </div>
         <ScoreCard
-          label="Drift score"
-          value={report.summary.driftScore}
-          detail={`${report.summary.totalIssues} open findings across ${routeCount} routes`}
+          label="Drift risk"
+          value={100 - report.summary.driftScore}
+          detail={`${report.summary.totalIssues} open findings across ${routeCount} routes. Lower is healthier.`}
           tone={
             report.summary.driftScore <= 40
               ? "critical"
@@ -99,6 +121,8 @@ export function Overview({ apiBaseUrl, mutationToken, report, mode = "fixture" }
           }
         />
       </section>
+
+      <StylePropagationPanel plan={stylePlan} mode={mode} />
 
       {report.summary.totalIssues === 0 ? (
         <section className="overview__empty">
@@ -165,6 +189,120 @@ export function Overview({ apiBaseUrl, mutationToken, report, mode = "fixture" }
           </section>
         </>
       )}
+    </section>
+  );
+}
+
+function StylePropagationPanel({
+  mode,
+  plan
+}: {
+  mode: "live" | "fixture";
+  plan?: StylePropagationPlan;
+}) {
+  if (mode !== "live") {
+    return (
+      <section className="overview__panel overview__style-agent">
+        <div>
+          <p className="overview__eyebrow">Style propagation agent</p>
+          <h2>Live API required</h2>
+          <p>
+            Start the DriftRadar API with an OpenAI key to compare recent git style changes and
+            generate a source-backed propagation plan.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  if (!plan) {
+    return (
+      <section className="overview__panel overview__style-agent">
+        <p className="overview__eyebrow">Style propagation agent</p>
+        <h2>Reading recent style changes…</h2>
+      </section>
+    );
+  }
+
+  const topOpportunity = plan.opportunities[0];
+  return (
+    <section className="overview__panel overview__style-agent">
+      <div className="overview__style-agent-header">
+        <div>
+          <p className="overview__eyebrow">Style propagation agent</p>
+          <h2>{plan.theme}</h2>
+          <p>{plan.summary}</p>
+        </div>
+        <span className={`overview__agent-badge overview__agent-badge--${plan.source}`}>
+          {plan.source === "openai" ? "OpenAI backed" : "Deterministic fallback"}
+        </span>
+      </div>
+
+      <ol className="overview__proof-chain" aria-label="Style propagation proof chain">
+        <li>
+          <span>1</span>
+          <strong>Read git style diff</strong>
+          <small>
+            {plan.baseRef} → {plan.headRef}
+          </small>
+        </li>
+        <li>
+          <span>2</span>
+          <strong>Infer design direction</strong>
+          <small>{plan.source === "openai" ? "OpenAI structured output" : "Local fallback"}</small>
+        </li>
+        <li>
+          <span>3</span>
+          <strong>Map stale surfaces</strong>
+          <small>{plan.opportunities.length} propagation targets</small>
+        </li>
+        <li>
+          <span>4</span>
+          <strong>Hand off fixes</strong>
+          <small>Review, apply, export PR packet</small>
+        </li>
+      </ol>
+
+      {topOpportunity ? (
+        <article className="overview__opportunity">
+          <div>
+            <strong>{topOpportunity.component}</strong>
+            <span>{Math.round(topOpportunity.confidence * 100)}% confidence</span>
+          </div>
+          <p>{topOpportunity.recommendedChange}</p>
+          <p className="overview__opportunity-rationale">{topOpportunity.rationale}</p>
+          {topOpportunity.targetFiles.length ? (
+            <ul>
+              {topOpportunity.targetFiles.map((file) => (
+                <li key={file}>
+                  <code>{file}</code>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </article>
+      ) : null}
+
+      <div className="overview__agent-columns">
+        <div>
+          <h3>Evidence</h3>
+          <ul>
+            {(plan.evidence.length ? plan.evidence : [`${plan.baseRef} → ${plan.headRef}`]).map(
+              (item) => (
+                <li key={item}>{item}</li>
+              )
+            )}
+          </ul>
+        </div>
+        <div>
+          <h3>Next actions</h3>
+          <ul>
+            {plan.nextActions.map((action) => (
+              <li key={action}>{action}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </section>
   );
 }

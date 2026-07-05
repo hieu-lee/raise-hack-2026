@@ -3,6 +3,7 @@
 import { access } from "node:fs/promises";
 import { spawn } from "node:child_process";
 
+const pnpm = process.env.PNPM_EXECUTABLE ?? ".venv/node_modules/.bin/pnpm";
 const checklist = [
   "1. pnpm demo:backend",
   "2. pnpm demo:serve",
@@ -14,7 +15,7 @@ const checklist = [
 ];
 
 if (await exists("dashboard/package.json")) {
-  const child = spawn("pnpm", ["--dir", "dashboard", "dev"], {
+  const child = spawn((await exists(pnpm)) ? pnpm : "pnpm", ["--dir", "dashboard", "dev"], {
     stdio: "inherit",
     shell: process.platform === "win32"
   });

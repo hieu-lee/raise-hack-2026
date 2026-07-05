@@ -8,6 +8,35 @@ function dashboardHeaders(mutationToken?: string): HeadersInit {
 
 export type IssueNameMap = Record<string, string>;
 
+export interface StylePropagationOpportunity {
+  component: string;
+  currentEvidence: string;
+  recommendedChange: string;
+  targetFiles: string[];
+  confidence: number;
+  rationale: string;
+}
+
+export interface StylePropagationPlan {
+  status:
+    | "ready"
+    | "no_git"
+    | "no_recent_style_change"
+    | "ai_unavailable"
+    | "error";
+  baseRef: string;
+  headRef: string;
+  generatedAt: string;
+  source: "openai" | "deterministic";
+  theme: string;
+  summary: string;
+  evidence: string[];
+  opportunities: StylePropagationOpportunity[];
+  nextActions: string[];
+  model?: string;
+  error?: string;
+}
+
 export type ProjectReadiness =
   | {
       state: "ready";
@@ -60,6 +89,35 @@ export async function fetchIssueNames(
   }
   const payload = (await response.json()) as { names?: IssueNameMap };
   return payload.names ?? {};
+}
+
+export async function fetchStylePropagationPlan(
+  apiBaseUrl: string,
+  runId: string,
+  mutationToken?: string,
+  fetcher: typeof fetch = fetch
+): Promise<StylePropagationPlan> {
+  const response = await fetcher(
+    `${trimTrailingSlash(apiBaseUrl)}/api/runs/${encodeURIComponent(runId)}/style-propagation`,
+    { headers: dashboardHeaders(mutationToken) }
+  );
+  const payload = (await response.json()) as StylePropagationPlan;
+  if (!response.ok) {
+    return {
+      status: "error",
+      baseRef: "master",
+      headRef: "HEAD",
+      generatedAt: new Date().toISOString(),
+      source: "deterministic",
+      theme: "Style propagation unavailable",
+      summary: payload.error ?? "Style propagation unavailable.",
+      evidence: [],
+      opportunities: [],
+      nextActions: ["Check the local API and OpenAI configuration."],
+      error: payload.error
+    };
+  }
+  return payload;
 }
 
 export async function applyIssueFix(

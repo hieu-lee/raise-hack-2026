@@ -1,5 +1,6 @@
 .issue-badge {
   align-items: center;
+  border: 1px solid transparent;
   border-radius: var(--dr-radius-pill);
   display: inline-flex;
   font-size: 0.76rem;
@@ -11,26 +12,31 @@
 }
 
 .issue-badge--critical {
+  border-color: var(--dr-color-danger-border);
   background: var(--dr-color-danger-bg);
   color: var(--dr-color-critical);
 }
 
 .issue-badge--high {
+  border-color: rgb(245 163 92 / 32%);
   background: rgb(245 163 92 / 14%);
   color: var(--dr-color-high);
 }
 
 .issue-badge--medium {
+  border-color: var(--dr-color-warning-border);
   background: var(--dr-color-warning-bg);
   color: var(--dr-color-medium);
 }
 
 .issue-badge--low {
+  border-color: var(--dr-color-success-border);
   background: var(--dr-color-success-bg);
   color: var(--dr-color-low);
 }
 
 .issue-badge--category {
-  background: var(--dr-color-surface-muted);
+  border-color: var(--dr-color-border);
+  background: rgb(15 23 42 / 58%);
   color: var(--color-text);
 }

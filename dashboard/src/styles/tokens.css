@@ -1,25 +1,25 @@
 :root {
   color-scheme: dark;
-  --dr-color-bg: #191919;
-  --dr-color-canvas: var(--dr-color-bg);
-  --dr-color-surface: #212121;
-  --dr-color-surface-muted: #262626;
-  --dr-color-surface-soft: #1d1d1d;
-  --dr-color-surface-raised: #2a2a2a;
-  --dr-color-text: #ececec;
-  --dr-color-muted: #9a9a9a;
-  --dr-color-subtle: #bdbdbd;
-  --dr-color-border: rgb(255 255 255 / 8%);
-  --dr-color-border-strong: rgb(255 255 255 / 16%);
-  --dr-color-scrollbar-thumb: #4a4a4a;
-  --dr-color-focus: #528bff;
-  --dr-color-brand: #528bff;
-  --dr-color-brand-strong: #6ea1ff;
-  --dr-color-brand-soft: rgb(82 139 255 / 14%);
-  --dr-color-critical: #f37373;
-  --dr-color-high: #f5a35c;
-  --dr-color-medium: #eeca5c;
-  --dr-color-low: #79d99d;
+  --dr-color-bg: #070a12;
+  --dr-color-canvas: #0b1020;
+  --dr-color-surface: rgb(17 24 39 / 86%);
+  --dr-color-surface-muted: rgb(30 41 59 / 82%);
+  --dr-color-surface-soft: rgb(15 23 42 / 76%);
+  --dr-color-surface-raised: rgb(37 50 74 / 90%);
+  --dr-color-text: #f8fafc;
+  --dr-color-muted: #94a3b8;
+  --dr-color-subtle: #cbd5e1;
+  --dr-color-border: rgb(148 163 184 / 16%);
+  --dr-color-border-strong: rgb(148 163 184 / 28%);
+  --dr-color-scrollbar-thumb: #475569;
+  --dr-color-focus: #38bdf8;
+  --dr-color-brand: #22d3ee;
+  --dr-color-brand-strong: #67e8f9;
+  --dr-color-brand-soft: rgb(34 211 238 / 15%);
+  --dr-color-critical: #fb7185;
+  --dr-color-high: #fb923c;
+  --dr-color-medium: #facc15;
+  --dr-color-low: #4ade80;
   --dr-color-success-bg: rgb(121 217 157 / 12%);
   --dr-color-success-border: rgb(121 217 157 / 35%);
   --dr-color-success-text: #79d99d;
@@ -39,11 +39,11 @@
   --dr-space-8: 2rem;
   --dr-space-9: 2.25rem;
   --dr-radius-xs: 0.25rem;
-  --dr-radius-sm: 0.5rem;
-  --dr-radius-md: 0.75rem;
-  --dr-radius-lg: 1rem;
+  --dr-radius-sm: 0.65rem;
+  --dr-radius-md: 1rem;
+  --dr-radius-lg: 1.35rem;
   --dr-radius-pill: 999px;
-  --dr-shadow-panel: 0 1px 2px rgb(0 0 0 / 30%), 0 12px 32px rgb(0 0 0 / 28%);
+  --dr-shadow-panel: 0 24px 80px rgb(0 0 0 / 38%), 0 1px 0 rgb(255 255 255 / 6%) inset;
   --dr-shadow-flat: 0 1px 0 rgb(0 0 0 / 20%);
   --dr-font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --dr-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -77,7 +77,10 @@
 
 html {
   min-width: 0;
-  background: var(--dr-color-bg);
+  background:
+    radial-gradient(circle at 15% 0%, rgb(34 211 238 / 18%), transparent 32rem),
+    radial-gradient(circle at 85% 8%, rgb(168 85 247 / 15%), transparent 30rem),
+    linear-gradient(180deg, #0b1020 0%, var(--dr-color-bg) 42rem);
   color: var(--dr-color-text);
   font-family: var(--dr-font-sans);
   letter-spacing: 0;
@@ -87,6 +90,8 @@ html {
 body {
   margin: 0;
   min-width: 0;
+  min-height: 100vh;
+  background: transparent;
 }
 
 h1,
@@ -142,10 +147,10 @@ button,
   justify-content: center;
   gap: var(--dr-space-2);
   min-height: 36px;
-  border: 1px solid var(--dr-color-border-strong);
+  border: 1px solid var(--dr-color-border);
   border-radius: var(--dr-radius-sm);
   padding: 0 var(--dr-space-4);
-  background: var(--dr-color-surface-muted);
+  background: linear-gradient(180deg, rgb(255 255 255 / 8%), rgb(255 255 255 / 3%));
   color: var(--dr-color-text);
   font-size: 0.875rem;
   font-weight: 500;
@@ -162,6 +167,7 @@ button,
 button:hover,
 .button:hover {
   background: var(--dr-color-surface-raised);
+  border-color: var(--dr-color-border-strong);
 }
 
 button:active,
@@ -177,10 +183,11 @@ button:disabled,
 }
 
 .button--primary {
-  border-color: var(--dr-color-brand);
-  background: var(--dr-color-brand);
-  color: #0b1220;
+  border-color: rgb(103 232 249 / 60%);
+  background: linear-gradient(135deg, var(--dr-color-brand), #8b5cf6);
+  color: #020617;
   font-weight: 600;
+  box-shadow: 0 12px 28px rgb(34 211 238 / 18%);
 }
 
 .button--primary:hover {

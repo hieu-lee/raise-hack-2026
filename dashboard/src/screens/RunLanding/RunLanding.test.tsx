@@ -40,8 +40,8 @@ describe("RunLanding", () => {
     expect(screen.getByRole("heading", { name: "DriftRadar sample app" })).toBeTruthy();
     expect(screen.getByText("frontend-handoff-run")).toBeTruthy();
     expect(screen.getByText("v1")).toBeTruthy();
-    expect(screen.getByText("44")).toBeTruthy();
-    expect(screen.getByRole("link", { name: "View issues" }).getAttribute("href")).toBe("#/issues");
+    expect(screen.getByText("56")).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Triage issues" }).getAttribute("href")).toBe("#/issues");
   });
 
   it("shows fixture mode when the live backend is unavailable", () => {

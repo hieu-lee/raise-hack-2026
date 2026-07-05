@@ -9,6 +9,11 @@ describe("PR comment export", () => {
     expect(markdown).toContain("## DriftRadar report: Export fixture");
     expect(markdown).toContain("### high");
     expect(markdown).toContain("#### home");
+    expect(markdown).toContain("Paste this into the PR");
+    expect(markdown).toContain("Confidence: 91%");
+    expect(markdown).toContain("Observed: `#1e64d8`");
+    expect(markdown).toContain("Expected: `#1d4ed8`");
+    expect(markdown).toContain("Screenshot: `screenshots/home/desktop/default.png`");
     expect(markdown).toContain("Replace #1e64d8 with --color-primary-600");
     expect(markdown).toContain("+ color: var(--color-primary-600);");
   });

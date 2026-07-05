@@ -12,8 +12,12 @@ describe("ScreenshotViewer", () => {
       />
     );
 
-    expect(screen.getByAltText("Button evidence")).toBeInTheDocument();
-    expect(screen.getByLabelText("Highlighted issue crop")).toHaveStyle({
+    const image = screen.getByAltText("Button evidence");
+    const overlay = image.parentElement?.querySelector(".crop-highlight");
+
+    expect(image).toBeInTheDocument();
+    expect(overlay).toHaveAttribute("aria-hidden", "true");
+    expect(overlay).toHaveStyle({
       left: "32px",
       top: "96px",
       width: "156px",

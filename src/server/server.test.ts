@@ -1,5 +1,6 @@
 import { type Server } from "node:http";
 import { AddressInfo } from "node:net";
+import { rm } from "node:fs/promises";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { createDashboardApp } from "./server.js";
 
@@ -24,6 +25,7 @@ describe("dashboard API", () => {
     await new Promise<void>((resolve, reject) => {
       server.close((error) => (error ? reject(error) : resolve()));
     });
+    await rm("fixtures/api-runs/runs/demo-run/style-propagation.json", { force: true });
   });
 
   it("serves health, runs, report, issues, assets, and markdown export", async () => {
@@ -86,6 +88,22 @@ describe("dashboard API", () => {
     expect(response.status).toBe(200);
     const body = (await response.json()) as { state: string };
     expect(body.state).toBe("no_source");
+  });
+
+  it("reports style propagation status with dashboard auth", async () => {
+    const forbidden = await fetch(`${baseUrl}/api/runs/demo-run/style-propagation`);
+    expect(forbidden.status).toBe(403);
+
+    const response = await fetch(
+      `${baseUrl}/api/runs/demo-run/style-propagation?baseRef=definitely-missing-ref&headRef=definitely-missing-head`,
+      {
+        headers: { "X-DriftRadar-Client": "dashboard", "X-DriftRadar-Token": mutationToken }
+      }
+    );
+    expect(response.status).toBe(200);
+    const body = (await response.json()) as { status: string; summary: string };
+    expect(body.status).toBe("no_git");
+    expect(body.summary.length).toBeGreaterThan(0);
   });
 
   it("handles copilot requests", async () => {

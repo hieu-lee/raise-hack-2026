@@ -32,7 +32,10 @@ describe("dashboard API client", () => {
     const fetcher = mockFetch(calls, {
       [`${DEFAULT_API_BASE_URL}/api/health`]: { status: "ok" },
       [`${DEFAULT_API_BASE_URL}/api/runs`]: {
-        runs: [{ runId: "newest" }, { runId: "older" }]
+        runs: [
+          { runId: "older", createdAt: "2026-07-05T09:00:00.000Z" },
+          { runId: "newest", createdAt: "2026-07-05T09:05:00.000Z" }
+        ]
       },
       [`${DEFAULT_API_BASE_URL}/api/runs/newest/report`]: { ...report, runId: "newest" }
     });
@@ -71,6 +74,19 @@ describe("dashboard API client", () => {
 
     expect(data.connection.mode).toBe("fixture");
     expect(data.report?.runId).toBe("frontend-handoff-run");
+  });
+
+  it("can load fixture data without probing the live API", async () => {
+    const calls: string[] = [];
+    const fetcher = mockFetch(calls, {
+      [`${FIXTURE_ROOT}/report.json`]: { ...report, runId: "frontend-handoff-run" }
+    });
+
+    const data = await loadDashboardData({ fetcher, fixtureOnly: true });
+
+    expect(data.connection.mode).toBe("fixture");
+    expect(data.report?.runId).toBe("frontend-handoff-run");
+    expect(calls).toEqual([`${FIXTURE_ROOT}/report.json`]);
   });
 
   it("returns no-runs without falling back when live API has no runs", async () => {
