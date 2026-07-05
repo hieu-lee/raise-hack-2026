@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { fetchIssueNames, type IssueNameMap } from "../api/mutations";
 import type { DriftIssue } from "../types/report";
 
@@ -9,11 +9,15 @@ export function useIssueNames(
   enabled: boolean,
   mutationToken?: string
 ): IssueNameMap {
-  const [names, setNames] = useState<IssueNameMap>({});
+  const fallbackNames = useMemo(
+    () => Object.fromEntries(issues.map((issue) => [issue.id, issue.title])),
+    [issues]
+  );
+  const [names, setNames] = useState<IssueNameMap>(fallbackNames);
 
   useEffect(() => {
     if (!enabled || !apiBaseUrl) {
-      setNames(Object.fromEntries(issues.map((issue) => [issue.id, issue.title])));
+      setNames(fallbackNames);
       return;
     }
 
@@ -21,19 +25,19 @@ export function useIssueNames(
     fetchIssueNames(apiBaseUrl, runId, mutationToken)
       .then((next) => {
         if (!cancelled) {
-          setNames(next);
+          setNames({ ...fallbackNames, ...next });
         }
       })
       .catch(() => {
         if (!cancelled) {
-          setNames(Object.fromEntries(issues.map((issue) => [issue.id, issue.title])));
+          setNames(fallbackNames);
         }
       });
 
     return () => {
       cancelled = true;
     };
-  }, [apiBaseUrl, enabled, issues, mutationToken, runId]);
+  }, [apiBaseUrl, enabled, fallbackNames, mutationToken, runId]);
 
   return names;
 }

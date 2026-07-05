@@ -41,14 +41,11 @@ export function createDashboardApp(options: ServerOptions = {}): express.Express
     next();
   });
 
-  const requireDashboardMutation = (
-    request: Request,
-    response: Response
-  ): response is Response => {
+  const requireDashboardMutation = (request: Request, response: Response): response is Response => {
     if (!isLocalRequest(request) || !isAllowedCopilotRequest(request)) {
-      response
-        .status(403)
-        .json({ error: "This action is only available from the DriftRadar dashboard on localhost" });
+      response.status(403).json({
+        error: "This action is only available from the DriftRadar dashboard on localhost"
+      });
       return false;
     }
     if (request.get("x-driftradar-token") !== mutationToken) {
@@ -556,21 +553,20 @@ function isAllowedCopilotRequest(request: Request): boolean {
 
   return candidates.some((value) => {
     try {
-      const origin = new URL(value).origin;
-      return allowedDashboardOrigins().has(origin);
+      const url = new URL(value);
+      const configuredOrigins = allowedDashboardOrigins();
+      return configuredOrigins
+        ? configuredOrigins.has(url.origin)
+        : url.protocol === "http:" && ["localhost", "127.0.0.1", "::1"].includes(url.hostname);
     } catch {
       return false;
     }
   });
 }
 
-function allowedDashboardOrigins(): Set<string> {
+function allowedDashboardOrigins(): Set<string> | undefined {
   const configured = process.env.DRIFTRADAR_DASHBOARD_ORIGIN?.split(",")
     .map((value) => value.trim())
     .filter(Boolean);
-  return new Set(
-    configured?.length
-      ? configured
-      : ["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:4173"]
-  );
+  return configured?.length ? new Set(configured) : undefined;
 }

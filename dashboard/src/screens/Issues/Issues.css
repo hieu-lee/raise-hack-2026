@@ -67,9 +67,7 @@
 .issue-filters {
   align-items: end;
   border: 1px solid var(--dr-color-border);
-  background:
-    linear-gradient(180deg, rgb(255 255 255 / 4%), transparent),
-    rgb(15 23 42 / 68%);
+  background: linear-gradient(180deg, rgb(255 255 255 / 4%), transparent), rgb(15 23 42 / 68%);
   border-radius: var(--dr-radius-lg);
   display: grid;
   gap: 0.8rem;
@@ -141,9 +139,7 @@
 
 .issue-row {
   align-items: stretch;
-  background:
-    linear-gradient(180deg, rgb(255 255 255 / 3%), transparent),
-    rgb(15 23 42 / 46%);
+  background: linear-gradient(180deg, rgb(255 255 255 / 3%), transparent), rgb(15 23 42 / 46%);
   border: 1px solid transparent;
   border-left: 3px solid transparent;
   border-radius: var(--dr-radius-md);
@@ -154,6 +150,7 @@
   gap: 0.5rem;
   justify-content: flex-start;
   min-width: 0;
+  min-height: 96px;
   padding: 0.9rem;
   text-align: left;
   width: 100%;
@@ -183,15 +180,15 @@
 
 .issue-row__top {
   display: flex;
-  align-items: flex-start;
+  align-items: start;
   justify-content: space-between;
   gap: 0.65rem;
   min-width: 0;
 }
 
 .issue-row-title {
-  font-weight: 600;
   font-size: 0.94rem;
+  font-weight: 650;
   line-height: 1.35;
   overflow: hidden;
   display: -webkit-box;
@@ -201,13 +198,19 @@
 }
 
 .issue-row__badges {
+  display: flex;
   flex-shrink: 0;
   justify-content: flex-end;
 }
 
+.issue-row__badges .issue-badge {
+  font-size: 0.68rem;
+  padding: 0.32rem 0.5rem;
+}
+
 .issue-row-meta {
   color: var(--color-subtle);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -284,9 +287,7 @@
 .metadata-grid div,
 .evidence-grid div {
   border: 1px solid var(--dr-color-border);
-  background:
-    linear-gradient(180deg, rgb(255 255 255 / 3%), transparent),
-    rgb(15 23 42 / 58%);
+  background: linear-gradient(180deg, rgb(255 255 255 / 3%), transparent), rgb(15 23 42 / 58%);
   border-radius: var(--dr-radius-sm);
   min-width: 0;
   padding: 0.55rem 0.65rem;
@@ -392,6 +393,13 @@
 
 .related-issues__link:hover {
   background: var(--dr-color-brand-soft);
+}
+
+.related-issues__summary {
+  margin: 0;
+  color: var(--color-subtle);
+  font-size: 0.86rem;
+  line-height: 1.45;
 }
 
 .no-results,

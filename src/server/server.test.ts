@@ -16,9 +16,11 @@ describe("dashboard API", () => {
     });
     const address = server.address() as AddressInfo;
     baseUrl = `http://127.0.0.1:${address.port}`;
-    mutationToken = ((await fetch(`${baseUrl}/api/health`).then((response) =>
-      response.json()
-    )) as { mutationToken: string }).mutationToken;
+    mutationToken = (
+      (await fetch(`${baseUrl}/api/health`).then((response) => response.json())) as {
+        mutationToken: string;
+      }
+    ).mutationToken;
   });
 
   afterEach(async () => {
@@ -29,7 +31,11 @@ describe("dashboard API", () => {
   });
 
   it("serves health, runs, report, issues, assets, and markdown export", async () => {
-    const health = (await getJson("/api/health")) as { status: string; version: string; mutationToken: string };
+    const health = (await getJson("/api/health")) as {
+      status: string;
+      version: string;
+      mutationToken: string;
+    };
     expect(health.status).toBe("ok");
     expect(health.version).toBe("0.1.0");
     expect(health.mutationToken).toBeTruthy();
@@ -79,6 +85,26 @@ describe("dashboard API", () => {
     expect(response.status).toBe(200);
     const body = (await response.json()) as { names: Record<string, string> };
     expect(body.names["issue-token-color"]).toBeTruthy();
+  });
+
+  it("allows dashboard mutation calls from any loopback dev port", async () => {
+    const allowed = await fetch(`${baseUrl}/api/runs/demo-run/issue-names`, {
+      headers: {
+        Origin: "http://localhost:4520",
+        "X-DriftRadar-Client": "dashboard",
+        "X-DriftRadar-Token": mutationToken
+      }
+    });
+    expect(allowed.status).toBe(200);
+
+    const forbidden = await fetch(`${baseUrl}/api/runs/demo-run/issue-names`, {
+      headers: {
+        Origin: "https://example.com",
+        "X-DriftRadar-Client": "dashboard",
+        "X-DriftRadar-Token": mutationToken
+      }
+    });
+    expect(forbidden.status).toBe(403);
   });
 
   it("reports project PR readiness", async () => {

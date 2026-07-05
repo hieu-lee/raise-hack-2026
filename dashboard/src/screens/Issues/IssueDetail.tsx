@@ -1,11 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import {
-  CheckCircle2,
-  Eye,
-  FileCode2,
-  GitPullRequest,
-  WandSparkles
-} from "lucide-react";
+import { CheckCircle2, Eye, FileCode2, GitPullRequest, WandSparkles } from "lucide-react";
 import {
   applyAllFixes,
   applyIssueFix,
@@ -101,6 +95,11 @@ export function IssueDetail({
   const patch = patchPreviewForFix(issue.suggestedFix);
   const patchBefore = patch?.before ?? "";
   const patchAfter = patch?.after ?? "";
+  const relatedIssues =
+    evidence?.relatedIssueIds
+      ?.map((id) => ({ id, name: issueNames[id] }))
+      .filter((entry): entry is { id: string; name: string } => Boolean(entry.name)) ?? [];
+  const groupedObservationCount = (evidence?.relatedIssueIds?.length ?? 0) - relatedIssues.length;
 
   async function handleApplyFix() {
     if (!apiBaseUrl || !applyEnabled || mutationBusy) {
@@ -222,7 +221,7 @@ export function IssueDetail({
       <div className="detail-heading">
         <div className="detail-heading__copy">
           <p className="eyebrow" title={issue.id}>
-            {issue.id}
+            Finding · {issue.routeId}
           </p>
           <h2>{displayName}</h2>
         </div>
@@ -241,7 +240,11 @@ export function IssueDetail({
           <p>{issue.reasoning}</p>
         </div>
         <dl className="metadata-grid">
-          <Meta icon={<WandSparkles size={14} />} label="Confidence" value={`${Math.round(issue.confidence * 100)}%`} />
+          <Meta
+            icon={<WandSparkles size={14} />}
+            label="Confidence"
+            value={`${Math.round(issue.confidence * 100)}%`}
+          />
           <Meta icon={<FileCode2 size={14} />} label="Property" value={issue.property} />
           <Meta icon={<Eye size={14} />} label="Route" value={issue.routeId} />
           <Meta icon={<Eye size={14} />} label="Viewport" value={issue.viewport} />
@@ -330,26 +333,38 @@ export function IssueDetail({
         />
       </section>
 
-      {evidence?.relatedIssueIds?.length ? (
+      {relatedIssues.length || groupedObservationCount > 0 ? (
         <section className="related-issues">
           <h3 className="section-label">Related</h3>
-          <ul>
-            {evidence.relatedIssueIds.map((relatedId) => (
-              <li key={relatedId}>
-                <button
-                  type="button"
-                  className="related-issues__link"
-                  onClick={() => onNavigateIssue?.(relatedId)}
-                >
-                  {issueNames[relatedId] ?? relatedId}
-                </button>
-              </li>
-            ))}
-          </ul>
+          {relatedIssues.length ? (
+            <ul>
+              {relatedIssues.map((related) => (
+                <li key={related.id}>
+                  <button
+                    type="button"
+                    className="related-issues__link"
+                    onClick={() => onNavigateIssue?.(related.id)}
+                  >
+                    {related.name}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          {groupedObservationCount > 0 ? (
+            <p className="related-issues__summary">
+              {groupedObservationCount} similar observation
+              {groupedObservationCount === 1 ? "" : "s"} grouped into this finding.
+            </p>
+          ) : null}
         </section>
       ) : null}
 
-      <div className="review-actions-slot" data-review-actions-slot aria-label="Review actions slot">
+      <div
+        className="review-actions-slot"
+        data-review-actions-slot
+        aria-label="Review actions slot"
+      >
         <ReviewActions issueId={issue.id} onStatusChange={onReviewStatusChange} runId={runId} />
       </div>
     </section>
@@ -408,15 +423,7 @@ function projectStatusMessage(status: ProjectReadiness): string {
   return status.message;
 }
 
-function Meta({
-  icon,
-  label,
-  value
-}: {
-  icon?: ReactNode;
-  label: string;
-  value: string;
-}) {
+function Meta({ icon, label, value }: { icon?: ReactNode; label: string; value: string }) {
   return (
     <div>
       <dt>
