@@ -1,0 +1,7 @@
+{
+  "projectName": "Bad viewport name fixture",
+  "baseUrl": "http://localhost:4173",
+  "routes": [{ "id": "home", "url": "/" }],
+  "tokenFiles": ["fixtures/config/tokens.css"],
+  "viewports": [{ "name": "../outside", "width": 1440, "height": 900 }]
+}

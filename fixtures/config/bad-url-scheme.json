@@ -1,0 +1,6 @@
+{
+  "projectName": "Bad URL scheme fixture",
+  "baseUrl": "ftp://localhost",
+  "routes": [{ "id": "home", "url": "javascript:alert(1)" }],
+  "tokenFiles": ["fixtures/config/tokens.css"]
+}

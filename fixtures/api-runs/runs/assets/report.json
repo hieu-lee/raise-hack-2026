@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "runId": "assets",
+  "projectName": "Assets run fixture",
+  "createdAt": "2026-07-03T13:00:00.000Z",
+  "configSummary": {
+    "routes": 1,
+    "viewports": 1,
+    "states": ["default"],
+    "tokenFiles": 1
+  },
+  "summary": {
+    "totalIssues": 0,
+    "countsByCategory": {
+      "token_misuse": 0,
+      "new_pattern_candidate": 0,
+      "accidental_regression": 0,
+      "acceptable_exception": 0
+    },
+    "countsBySeverity": {
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    "driftScore": 100
+  },
+  "tokens": {
+    "counts": {
+      "colors": 0,
+      "spacing": 0,
+      "radii": 0,
+      "typography": 0,
+      "shadows": 0
+    },
+    "sourceFiles": [
+      {
+        "path": "tokens.css",
+        "modifiedTime": "2026-07-03T12:00:00.000Z"
+      }
+    ]
+  },
+  "pages": [
+    {
+      "routeId": "home",
+      "viewport": "desktop",
+      "state": "default",
+      "screenshotPath": "screenshots/home/desktop/default.png",
+      "capturedAt": "2026-07-03T12:01:00.000Z",
+      "browser": {
+        "name": "chromium",
+        "version": "stable"
+      }
+    }
+  ],
+  "issues": []
+}

@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+  --font-*: initial;
+  --font-outfit: Outfit, sans-serif;
+  --font-ubuntu-mono: var(--font-ubuntu-mono);
+
+  --color-brand-500: #465fff;
+  --color-gray-900: #101828;
+  --grey-700: 213, 11%, 31%;
+  --color-soft: hsl(var(--grey-700));
+
+  --shadow-theme-xs: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  --shadow-theme-hsl: 0px 2px 4px 0px hsl(var(--grey-700), 0.2);
+}

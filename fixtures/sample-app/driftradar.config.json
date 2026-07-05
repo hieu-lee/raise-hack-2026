@@ -1,0 +1,24 @@
+{
+  "projectName": "DriftRadar sample app",
+  "baseUrl": "http://127.0.0.1:4173",
+  "routes": [
+    { "id": "overview", "url": "/", "label": "Overview" },
+    { "id": "buttons", "url": "/buttons.html", "label": "Buttons" },
+    { "id": "cards", "url": "/cards.html", "label": "Cards" },
+    { "id": "forms", "url": "/forms.html", "label": "Forms" },
+    { "id": "dark", "url": "/dark.html", "label": "Dark mode" }
+  ],
+  "tokenFiles": ["sample-app/tokens.css"],
+  "outputDir": ".driftradar",
+  "viewports": [
+    { "name": "desktop", "width": 1440, "height": 900 },
+    { "name": "mobile", "width": 390, "height": 844 }
+  ],
+  "states": ["default", "hover", "focus", "disabled", "dark"],
+  "ai": {
+    "enabled": true,
+    "model": "gpt-5.4-mini",
+    "reasoningEffort": "medium",
+    "sourceRoots": ["sample-app"]
+  }
+}

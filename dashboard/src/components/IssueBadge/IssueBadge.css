@@ -1,0 +1,36 @@
+.issue-badge {
+  align-items: center;
+  border-radius: var(--dr-radius-pill);
+  display: inline-flex;
+  font-size: 0.76rem;
+  font-weight: 600;
+  gap: 0.3rem;
+  line-height: 1;
+  padding: 0.4rem 0.6rem;
+  white-space: nowrap;
+}
+
+.issue-badge--critical {
+  background: var(--dr-color-danger-bg);
+  color: var(--dr-color-critical);
+}
+
+.issue-badge--high {
+  background: rgb(245 163 92 / 14%);
+  color: var(--dr-color-high);
+}
+
+.issue-badge--medium {
+  background: var(--dr-color-warning-bg);
+  color: var(--dr-color-medium);
+}
+
+.issue-badge--low {
+  background: var(--dr-color-success-bg);
+  color: var(--dr-color-low);
+}
+
+.issue-badge--category {
+  background: var(--dr-color-surface-muted);
+  color: var(--color-text);
+}

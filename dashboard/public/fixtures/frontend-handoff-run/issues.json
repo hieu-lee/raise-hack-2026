@@ -1,0 +1,139 @@
+[
+  {
+    "id": "issue-token-blue",
+    "title": "Primary button uses a near-token blue literal",
+    "category": "token_misuse",
+    "severity": "high",
+    "confidence": 0.9,
+    "routeId": "buttons",
+    "viewport": "desktop",
+    "state": "default",
+    "elementId": "buttons-primary-action",
+    "selectorHint": ".primary-action",
+    "property": "color",
+    "observedValue": "#1f6fe5",
+    "expectedValue": "var(--color-primary-600)",
+    "nearestToken": "--color-primary-600",
+    "evidence": {
+      "screenshotPath": "screenshots/buttons/desktop/default.png",
+      "cropBox": {
+        "x": 32,
+        "y": 96,
+        "width": 156,
+        "height": 44
+      },
+      "tokenDistance": 1.8,
+      "occurrenceCount": 2,
+      "relatedIssueIds": []
+    },
+    "reasoning": "The button color is perceptually close to the primary token but uses a literal value, which makes brand refreshes harder to apply consistently.",
+    "suggestedFix": {
+      "type": "replace-css",
+      "cssBefore": "background: #1f6fe5;",
+      "cssAfter": "background: var(--color-primary-600);",
+      "humanInstruction": "Replace the literal button background with var(--color-primary-600)."
+    },
+    "status": "open"
+  },
+  {
+    "id": "issue-pill-radius",
+    "title": "Repeated 44px pill radius is untokenized",
+    "category": "new_pattern_candidate",
+    "severity": "medium",
+    "confidence": 0.86,
+    "routeId": "cards",
+    "viewport": "desktop",
+    "state": "default",
+    "elementId": "cards-card",
+    "selectorHint": ".card",
+    "property": "radius",
+    "observedValue": "44px",
+    "expectedValue": "promote compact pill radius token",
+    "evidence": {
+      "screenshotPath": "screenshots/cards/desktop/default.png",
+      "cropBox": {
+        "x": 32,
+        "y": 176,
+        "width": 420,
+        "height": 140
+      },
+      "occurrenceCount": 4,
+      "relatedIssueIds": []
+    },
+    "reasoning": "The same off-token radius appears repeatedly, so it is probably a pattern to reconcile rather than a one-off typo.",
+    "suggestedFix": {
+      "type": "promote-token",
+      "cssBefore": "border-radius: 44px;",
+      "humanInstruction": "Promote the repeated 44px radius into a named token or replace it with --radius-card."
+    },
+    "status": "open"
+  },
+  {
+    "id": "issue-focus-ring",
+    "title": "Focus ring regressed from the system color",
+    "category": "accidental_regression",
+    "severity": "critical",
+    "confidence": 0.92,
+    "routeId": "forms",
+    "viewport": "desktop",
+    "state": "focus",
+    "elementId": "forms-primary-action",
+    "selectorHint": ".primary-action:focus",
+    "property": "interaction",
+    "observedValue": "#ff4d4f",
+    "expectedValue": "var(--color-focus-ring)",
+    "nearestToken": "--color-focus-ring",
+    "evidence": {
+      "screenshotPath": "screenshots/forms/desktop/focus.png",
+      "cropBox": {
+        "x": 28,
+        "y": 92,
+        "width": 164,
+        "height": 52
+      },
+      "tokenDistance": 12.4,
+      "occurrenceCount": 1,
+      "relatedIssueIds": []
+    },
+    "reasoning": "The focus state is isolated and conflicts with the system focus token, so it is likely an accidental interaction regression.",
+    "suggestedFix": {
+      "type": "replace-css",
+      "cssBefore": "outline-color: #ff4d4f;",
+      "cssAfter": "outline-color: var(--color-focus-ring);",
+      "humanInstruction": "Use the shared focus-ring token for keyboard focus states."
+    },
+    "status": "open"
+  },
+  {
+    "id": "issue-dark-exception",
+    "title": "Dark preview surface intentionally diverges for contrast",
+    "category": "acceptable_exception",
+    "severity": "low",
+    "confidence": 0.74,
+    "routeId": "dark",
+    "viewport": "desktop",
+    "state": "dark",
+    "elementId": "dark-preview",
+    "selectorHint": ".dark-preview",
+    "property": "color",
+    "observedValue": "#0f172a",
+    "expectedValue": "#0f172a",
+    "evidence": {
+      "screenshotPath": "screenshots/dark/desktop/dark.png",
+      "cropBox": {
+        "x": 32,
+        "y": 240,
+        "width": 420,
+        "height": 80
+      },
+      "occurrenceCount": 1,
+      "relatedIssueIds": []
+    },
+    "reasoning": "The dark preview panel is documented as a contrast exception and does not repeat across unrelated surfaces.",
+    "suggestedFix": {
+      "type": "document-exception",
+      "humanInstruction": "Keep the exception documented; promote it only if this surface spreads."
+    },
+    "status": "open"
+  }
+]

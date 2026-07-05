@@ -1,0 +1,158 @@
+{
+  "run_id": "20260703144907-62f6fcfc",
+  "topic": "Static design tokens and component libraries are brittle contracts: the moment a brand evolves, a new team ships a component, or an interaction grows past its fortieth branching state, the system quietly fractures. Build an AI-native design system that reasons about consistency across a product's visual and interactive surface — detecting drift, proposing reconciliation, and keeping designers and engineers aligned without a synchronization meeting. The question isn't whether the model can read your tokens or trace a state graph; it's whether the system has enough taste to know when something is wrong.\n\nExample projects:\n- A CLI that diffs your Figma token file against your deployed CSS and surfaces semantic mismatches with proposed fixes.\n- A visual regression tool that classifies diffs as intentional redesigns, accidental regressions, or platform-imposed constraints — explaining its reasoning and drafting a fix for anything flagged as a regression.\n- A chat interface where a designer describes an intent and the system shows which existing tokens and components satisfy it versus which ones conflict.",
+  "deadline": "2026-07-05T19:00:00+02:00",
+  "backend_deadline": "2026-07-05T00:44:11.455668+02:00",
+  "project_name": "DriftRadar: Local AI Taste Gate for Design Systems",
+  "project_directory_name": "driftradar-local-ai-taste-gate-for-design-systems",
+  "project_dir": "/Users/hieu.leduc/hackathons/driftradar-local-ai-taste-gate-for-design-systems",
+  "selected_idea": {
+    "idea_id": 3,
+    "title": "DriftRadar: Local AI Taste Gate for Design Systems",
+    "summary": "Build a no-auth CLI plus small dashboard that scans a product or Storybook with Playwright, extracts CSS variables/design tokens, captures component screenshots across states, and detects where the UI has drifted from the design system. It clusters similar-but-not-identical colors, spacing, radii, typography, shadows, and interaction states, then labels each issue as likely token misuse, new pattern needing promotion, accidental regression, or acceptable exception. For each finding it explains the reasoning and suggests a concrete fix such as “replace #1E64D8 with var(--color-primary-600)” or “promote this repeated 44px pill button variant into Button/compact.”",
+    "value": "High economic value because design-system drift creates repeated designer review cycles, frontend rework, inconsistent UX, and slower brand refreshes. DriftRadar can become a PR/design QA gate: before merge, teams get an actionable report of off-token styling and inconsistent interaction behavior without scheduling a design sync. The buyer story is clear for product teams with large component libraries: reduce design debt, shorten QA, make migrations measurable, and prevent one-off components from silently becoming the product’s real design system.",
+    "no_paid_key_plan": "Use only local/open-source tooling: Node.js CLI, Playwright for page crawling and screenshots, CSS parser/PostCSS for token extraction, pixelmatch or SSIM for visual diffing, simple clustering for near-token detection, SQLite/JSON for storage, and an optional local Ollama-compatible model for natural-language explanations. If no local model is available, fall back to deterministic explanations from the analysis engine, so the demo still works with zero API keys, zero accounts, and no paid services.",
+    "prototype_scope": "Five parallel Codex agents can build it quickly: Agent 1 builds the CLI scanner that accepts token JSON/CSS and a list of URLs or Storybook stories; Agent 2 builds the Playwright screenshot/state capture layer for hover, focus, disabled, dark mode, and viewport variants; Agent 3 builds the drift engine for colors, typography, spacing, radii, shadows, and repeated untokenized patterns; Agent 4 builds the reconciliation suggester that maps drift to token replacements or component promotion proposals; Agent 5 builds the local dashboard/report with issue severity, screenshots, before/after CSS snippets, and exportable PR comments. Hackathon demo scope: run on a small sample app with intentional drift, show a ranked report, click an issue, see the reasoning and suggested patch, then regenerate the report after applying the fix."
+  },
+  "ideas": [
+    {
+      "idea_id": 1,
+      "title": "Drift Doctor: AI Design-System Consistency Auditor",
+      "summary": "Build a local-first CLI + web dashboard that scans a product repo, screenshots component states, parses design tokens from CSS/JSON/Tailwind, and uses open-source vision/language models plus deterministic rules to detect design-system drift. It flags mismatched colors, spacing, typography, radius, elevation, duplicated components, and inconsistent interaction states, then proposes token-aligned fixes as CSS/TSX patches with a plain-English rationale.",
+      "value": "Design-system drift wastes engineering time, creates inconsistent UX, and makes rebrands expensive. This prototype gives teams an automated reviewer that catches visual and interaction inconsistencies before merge, reduces design QA meetings, and turns vague feedback like “this feels off-brand” into concrete token-based diffs and patch suggestions. It has clear buyer value for product teams maintaining large React apps, internal component libraries, or multi-brand frontends.",
+      "no_paid_key_plan": "Use no paid API keys. Run locally with Playwright for screenshots, Style Dictionary or simple parsers for token ingestion, AST parsing for React/CSS, pixel and perceptual-diff algorithms for visual comparison, and optional local Ollama models such as Llama/Qwen for explanation and patch drafting. If local LLM setup is too heavy, the core demo still works with deterministic heuristics and templated recommendations.",
+      "prototype_scope": "Five parallel Codex agents can build: 1) repo/token scanner that extracts CSS variables, Tailwind config, component props, and usage sites; 2) Playwright screenshot harness that renders Storybook or sample routes across states like default, hover, focus, disabled, error, and loading; 3) drift engine that maps observed colors, spacing, font sizes, radii, and state transitions to nearest approved tokens and scores violations; 4) reconciliation engine that generates proposed CSS/TSX diffs and concise rationales; 5) dashboard/CLI reporter showing screenshots, severity, token mismatch, explanation, and one-click patch export. Demo target: run against a bundled sample React component library with intentionally inconsistent buttons, cards, inputs, and modal states, then show detected drift and generated fixes before the deadline."
+    },
+    {
+      "idea_id": 2,
+      "title": "Design System Drift Copilot",
+      "summary": "A local-first CLI + small web dashboard that scans a product repo, extracts design tokens from CSS/Tailwind/Storybook/components, screenshots component states with Playwright, and uses open-source vision/text models plus deterministic rules to detect visual and semantic drift. It reports where colors, spacing, typography, radius, motion, and interaction states no longer match the intended system, then generates concrete reconciliation PR patches such as token aliases, CSS variable fixes, Tailwind config changes, or component prop normalization.",
+      "value": "Design system drift wastes senior designer and frontend time, creates inconsistent UX, and slows launches because teams debate whether mismatches are intentional. This prototype gives design-system teams a measurable audit: which components are off-brand, how severe the drift is, why it happened, and what code change would repair it. Economic value is strong because it reduces manual QA, prevents duplicate components, shortens design review cycles, and creates a path to paid enterprise tooling for continuous design-system governance in CI.",
+      "no_paid_key_plan": "Use no paid APIs. Run everything locally with Playwright, Storybook static builds, CSS parsers, Tailwind config parsing, Style Dictionary token parsing, pixel/image metrics, and optional open-source models through Ollama or transformers.js. Use SQLite for findings, a local Vite/React dashboard, and git diff generation for proposed fixes. If model setup is risky, fall back to deterministic heuristics plus templated explanations, which is enough for a compelling demo.",
+      "prototype_scope": "Build a repo scanner that ingests one sample React/Tailwind/Storybook app; extracts declared tokens and actual rendered styles; captures screenshots of component states; flags drift such as near-duplicate colors, off-scale spacing, inconsistent radius, typography mismatch, and missing hover/focus/disabled states; ranks issues by severity; explains each issue in plain English; and generates patch suggestions. Split across five Codex agents: 1) token/style extractor, 2) Playwright screenshot and state crawler, 3) drift scoring engine, 4) fix generator producing diffs, 5) dashboard/CLI demo flow. By the deadline, demo a before/after audit on 8–12 components with one-click generated patches and a design-system health score."
+    },
+    {
+      "idea_id": 3,
+      "title": "DriftRadar: Local AI Taste Gate for Design Systems",
+      "summary": "Build a no-auth CLI plus small dashboard that scans a product or Storybook with Playwright, extracts CSS variables/design tokens, captures component screenshots across states, and detects where the UI has drifted from the design system. It clusters similar-but-not-identical colors, spacing, radii, typography, shadows, and interaction states, then labels each issue as likely token misuse, new pattern needing promotion, accidental regression, or acceptable exception. For each finding it explains the reasoning and suggests a concrete fix such as “replace #1E64D8 with var(--color-primary-600)” or “promote this repeated 44px pill button variant into Button/compact.”",
+      "value": "High economic value because design-system drift creates repeated designer review cycles, frontend rework, inconsistent UX, and slower brand refreshes. DriftRadar can become a PR/design QA gate: before merge, teams get an actionable report of off-token styling and inconsistent interaction behavior without scheduling a design sync. The buyer story is clear for product teams with large component libraries: reduce design debt, shorten QA, make migrations measurable, and prevent one-off components from silently becoming the product’s real design system.",
+      "no_paid_key_plan": "Use only local/open-source tooling: Node.js CLI, Playwright for page crawling and screenshots, CSS parser/PostCSS for token extraction, pixelmatch or SSIM for visual diffing, simple clustering for near-token detection, SQLite/JSON for storage, and an optional local Ollama-compatible model for natural-language explanations. If no local model is available, fall back to deterministic explanations from the analysis engine, so the demo still works with zero API keys, zero accounts, and no paid services.",
+      "prototype_scope": "Five parallel Codex agents can build it quickly: Agent 1 builds the CLI scanner that accepts token JSON/CSS and a list of URLs or Storybook stories; Agent 2 builds the Playwright screenshot/state capture layer for hover, focus, disabled, dark mode, and viewport variants; Agent 3 builds the drift engine for colors, typography, spacing, radii, shadows, and repeated untokenized patterns; Agent 4 builds the reconciliation suggester that maps drift to token replacements or component promotion proposals; Agent 5 builds the local dashboard/report with issue severity, screenshots, before/after CSS snippets, and exportable PR comments. Hackathon demo scope: run on a small sample app with intentional drift, show a ranked report, click an issue, see the reasoning and suggested patch, then regenerate the report after applying the fix."
+    },
+    {
+      "idea_id": 4,
+      "title": "Design Drift Doctor: Local AI Auditor for Tokens, Components, and Screenshots",
+      "summary": "Build a CLI + lightweight web report that scans a repo’s design tokens, CSS variables, Storybook/component examples, and Playwright screenshots to detect where the product has drifted from its design system. It clusters colors, spacing, typography, radius, shadows, and component states; flags semantic mismatches like “primary button uses brand-600 in tokens but deployed CSS uses #2563eb”; and generates human-readable reconciliation proposals plus patch suggestions.",
+      "value": "Design-system drift creates expensive rework, inconsistent UX, and slow designer-engineer alignment. This tool gives product teams a cheap automated audit they can run in CI before every release. The business value is clear: fewer visual regressions, less time spent in design review meetings, faster brand updates, and better reuse of existing components instead of one-off implementations.",
+      "no_paid_key_plan": "Use no paid APIs. Core detection can be deterministic with open-source tooling: Node.js CLI, Style Dictionary/token JSON parsing, CSS AST parsing with PostCSS, Storybook static build or sample HTML, Playwright screenshots, pixel/color analysis with sharp, and local embeddings/classification using a small open-source model via Ollama if available. If no local model is installed, fall back to rule-based explanations and templated fix suggestions. The prototype should work fully offline on a sample repo.",
+      "prototype_scope": "Five parallel Codex agents can build this quickly: Agent 1 builds the CLI scanner for tokens, CSS variables, and component files. Agent 2 builds screenshot capture and visual feature extraction for colors, spacing, typography, radius, and states. Agent 3 builds the drift rules engine that scores severity and groups issues by token/component/page. Agent 4 builds the reconciliation generator that proposes token mappings, CSS patches, and concise explanations. Agent 5 builds the web report UI with before/after screenshots, issue filters, confidence scores, and copyable fixes. Demo flow: run `npx drift-doctor ./sample-app`, generate `drift-report.html`, show 8-12 detected inconsistencies, explain which are regressions vs intentional-looking changes, and output patch snippets."
+    },
+    {
+      "idea_id": 5,
+      "title": "Design System Drift Doctor",
+      "summary": "A local-first CLI + web dashboard that scans a product repo, extracts design signals from CSS/Tailwind/theme files, Storybook/component examples, and screenshots, then compares them against a declared design system contract. It flags visual and interaction drift such as near-duplicate colors, inconsistent spacing, unauthorized variants, mismatched disabled/loading/error states, and components that look similar but use different tokens. For each issue it gives a plain-English diagnosis, confidence level, affected files, and a proposed reconciliation patch.",
+      "value": "Design systems fail economically when teams unknowingly fork decisions: duplicated components, inconsistent brand expression, regression QA overhead, and designer-engineer sync meetings. This tool turns design consistency into an automated review step. It would help product teams reduce UI debt, catch brand drift before release, and speed up design-system migration work by producing concrete fixes instead of vague audit reports.",
+      "no_paid_key_plan": "Use no paid APIs. Run fully locally with static analysis, Playwright screenshots, image comparison, CSS parsing, AST parsing, and optional local LLM support through Ollama if available. The prototype can work without any model by using deterministic heuristics and rule-based explanations, then optionally improve explanations and fix suggestions with a local open model. Inputs are a Git repo plus an optional design-system config file defining approved tokens, component names, and allowed states.",
+      "prototype_scope": "Build an MVP in five parallel tracks: Agent 1 builds the repo scanner for CSS, Tailwind config, design token JSON, and React component files. Agent 2 builds Playwright capture of component pages or Storybook URLs plus visual feature extraction. Agent 3 builds drift detectors for color, spacing, typography, radius, shadows, and state coverage. Agent 4 builds the reconciliation engine that suggests token replacements and generates patch-style diffs. Agent 5 builds the dashboard and CLI report with issue cards, screenshots, confidence scores, and one-command export. Demo flow: run `drift-doctor scan ./demo-app`, open a local report, show detected drift, accept a suggested fix, and rerun to show the system is back in alignment."
+    },
+    {
+      "idea_id": 6,
+      "title": "Design Drift Doctor: Local AI Auditor for Tokens, CSS, and Component Screenshots",
+      "summary": "Build a no-auth web app + CLI that scans a repo for design tokens, CSS variables, Storybook/component examples, and screenshots, then produces a ranked “design drift report.” It detects mismatches such as hardcoded colors, near-duplicate spacing values, inconsistent radius/shadow usage, unsupported component variants, and visual regressions between component states. For each issue, it explains why it violates the system’s design intent and drafts a concrete patch or token reconciliation proposal.",
+      "value": "Design systems fail expensively because drift is discovered late: during QA, redesigns, accessibility reviews, or cross-team cleanup. This tool gives design-system teams an automated reviewer that reduces manual audits, prevents inconsistent UI from shipping, and turns vague design debt into actionable engineering tickets. The business value is faster UI delivery, fewer brand inconsistencies, less designer-engineer coordination overhead, and lower maintenance cost for large component libraries.",
+      "no_paid_key_plan": "Use only local/open tooling. Parse tokens from JSON, CSS, Tailwind config, and Style Dictionary-style files. Use Playwright for screenshots, pixelmatch or SSIM for visual diffs, tinycolor/chroma-js for color distance, PostCSS for CSS analysis, and AST parsing for React/Vue components. For AI-style reasoning, use a local rules-and-heuristics engine first, with optional Ollama/local LLM support if available. The prototype works fully without paid APIs, cloud services, auth, or Figma integration.",
+      "prototype_scope": "Five parallel Codex agents can build this quickly: Agent 1 builds the CLI scanner for tokens, CSS variables, Tailwind config, and hardcoded style extraction. Agent 2 builds the Storybook/Playwright screenshot capture and visual diff pipeline. Agent 3 builds the drift detection rules: color similarity, spacing/radius outliers, token alias mismatches, duplicate semantic tokens, and unsupported variants. Agent 4 builds the reconciliation engine that generates suggested fixes, CSS patches, token renames, and human-readable rationale. Agent 5 builds the local web dashboard showing severity-ranked issues, before/after screenshots, token maps, and one-click export to Markdown/JSON. Demo target: run on a sample component repo, show 10 seeded design drifts, classify them, explain the reasoning, and generate patch suggestions."
+    }
+  ],
+  "ratings": [
+    {
+      "pm_id": 1,
+      "scores": {
+        "1": 8,
+        "2": 9,
+        "3": 10,
+        "4": 8,
+        "5": 9,
+        "6": 9
+      },
+      "best_idea_id": 3,
+      "rationale": "Idea 3 is the best hackathon bet because it balances feasibility with the core ambition of the topic: not just detecting off-token CSS, but making taste-like judgments about whether a discrepancy is misuse, regression, acceptable exception, or a new component pattern worth promoting. That gives the demo a stronger narrative while still being buildable locally with deterministic analysis, clustering, screenshots, and templated reasoning."
+    },
+    {
+      "pm_id": 2,
+      "scores": {
+        "1": 8,
+        "2": 8,
+        "3": 9,
+        "4": 8,
+        "5": 8,
+        "6": 8
+      },
+      "best_idea_id": 3,
+      "rationale": "Idea 3 is the best hackathon PM choice. It keeps the same practical local architecture as the others, but adds the most topic-relevant judgment layer: distinguishing token misuse, repeated patterns worth promoting, regressions, and acceptable exceptions. That makes it feel closer to an AI-native design-system copilot instead of only a style linter. It is also easy to divide among five Codex agents and can demo well without paid APIs by using deterministic clustering and rule-based explanations first."
+    },
+    {
+      "pm_id": 3,
+      "scores": {
+        "1": 8,
+        "2": 8,
+        "3": 9,
+        "4": 8,
+        "5": 8,
+        "6": 8
+      },
+      "best_idea_id": 3,
+      "rationale": "Pick Idea 3. All six are viable and similar, but Idea 3 has the strongest combination of hackathon feasibility and topic fit. Its key advantage is the classification layer: token misuse vs new pattern vs accidental regression vs acceptable exception. That creates the illusion and product value of taste without requiring a fragile fully general AI design critic. Build the prototype around deterministic extraction, clustering, seeded examples, and templated explanations, with optional local LLM polish only if time allows."
+    },
+    {
+      "pm_id": 4,
+      "scores": {
+        "1": 8,
+        "2": 8,
+        "3": 9,
+        "4": 8,
+        "5": 8,
+        "6": 8
+      },
+      "best_idea_id": 3,
+      "rationale": "Idea 3 is the best choice because it preserves the same practical local-first architecture as the others while adding the most important differentiator: judgment. Classifying findings as token misuse, new pattern needing promotion, accidental regression, or acceptable exception makes the prototype feel closer to an AI-native design-system PM/reviewer rather than a token linter. It is still feasible for parallel Codex agents because the first version can use clustering, rules, seeded examples, and templated explanations instead of relying on fragile paid APIs or heavy model setup."
+    },
+    {
+      "pm_id": 5,
+      "scores": {
+        "1": 8,
+        "2": 8,
+        "3": 9,
+        "4": 8,
+        "5": 8,
+        "6": 8
+      },
+      "best_idea_id": 3,
+      "rationale": "Idea 3 is the best hackathon choice because it combines a buildable local CLI/dashboard with the most topic-relevant product insight: not just finding off-token styling, but reasoning about whether a difference is misuse, regression, acceptable exception, or an emerging pattern that should be promoted. That makes the demo feel more AI-native and more valuable than a standard visual/token linter while still remaining feasible with deterministic heuristics, seeded sample components, Playwright screenshots, CSS parsing, clustering, and templated explanations."
+    },
+    {
+      "pm_id": 6,
+      "scores": {
+        "1": 8,
+        "2": 9,
+        "3": 10,
+        "4": 8,
+        "5": 8,
+        "6": 9
+      },
+      "best_idea_id": 3,
+      "rationale": "Idea 3 is the strongest overall because it best captures the AI-native design-system ambition while staying prototype-friendly. The key differentiator is classification of drift into misuse, new pattern, regression, or acceptable exception, which makes the product feel like a taste gate rather than just a linter. It is buildable with deterministic local tooling, easy to split across parallel Codex agents, avoids paid/sign-up dependencies, and has a clear economic buyer story for design-system and frontend platform teams."
+    }
+  ],
+  "completed_steps": [
+    "ideas",
+    "idea_selected",
+    "planning_docs",
+    "setup",
+    "backend",
+    "frontend_plan_updated",
+    "frontend"
+  ],
+  "active_phase": null,
+  "active_worktrees": {}
+}

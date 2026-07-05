@@ -1,0 +1,12 @@
+---
+description: Enforce commit and push gates for this repo
+alwaysApply: true
+---
+
+# Commit and Push Gate
+
+- Do not commit until there have been 3 consecutive clean reviews from Cursor subagents running in `yolo` mode.
+- If any review is non-clean, reset the clean-review streak and re-review after fixing the issues.
+- Only treat a review as clean when the reviewer found no real problems, or any remaining findings are clearly false positives or explicitly accepted follow-ups.
+- Do not push unless the commit is ready, the 3 consecutive clean reviews have passed, tests and browser checks are clean, and the user has explicitly asked to push.
+- If the user has not explicitly asked to push, never push.

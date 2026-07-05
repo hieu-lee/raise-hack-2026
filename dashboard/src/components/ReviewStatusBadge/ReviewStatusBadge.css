@@ -1,0 +1,25 @@
+.review-status-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--dr-radius-pill);
+  padding: 0.3rem 0.65rem;
+  background: var(--dr-color-surface-muted);
+  color: var(--dr-color-muted);
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.review-status-badge--reviewed {
+  background: var(--dr-color-success-bg);
+  color: var(--dr-color-success-text);
+}
+
+.review-status-badge--accepted-exception {
+  background: var(--dr-color-brand-soft);
+  color: var(--dr-color-brand-strong);
+}
+
+.review-status-badge--hidden {
+  background: var(--dr-color-warning-bg);
+  color: var(--dr-color-warning-text);
+}

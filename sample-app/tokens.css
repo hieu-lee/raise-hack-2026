@@ -1,0 +1,18 @@
+:root {
+  --color-primary-600: #1e64d8;
+  --color-focus-ring: #7c3aed;
+  --color-surface: #ffffff;
+  --color-surface-dark: #0b1220;
+  --color-text: #111827;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --radius-card: 12px;
+  --radius-control: 8px;
+  --shadow-card: 0 8px 28px rgba(17, 24, 39, 0.12);
+}
+
+[data-theme="dark"] {
+  --color-surface: var(--color-surface-dark);
+  --color-text: #e5e7eb;
+}

@@ -1,0 +1,40 @@
+{
+  "color": {
+    "$type": "color",
+    "brand": {
+      "primary": {
+        "$value": "#1e64d8"
+      }
+    }
+  },
+  "space": {
+    "$type": "dimension",
+    "3": {
+      "$value": "12px"
+    }
+  },
+  "radius": {
+    "button": {
+      "$type": "radius",
+      "$value": "6px"
+    }
+  },
+  "typography": {
+    "body": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Inter",
+        "fontSize": "16px",
+        "fontWeight": 600,
+        "lineHeight": "24px",
+        "letterSpacing": "0px"
+      }
+    }
+  },
+  "shadow": {
+    "card": {
+      "$type": "shadow",
+      "$value": "0 1px 3px 0 #000000"
+    }
+  }
+}

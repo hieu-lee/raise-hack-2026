@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Capture fixture</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Inter, sans-serif;
+      }
+
+      .card {
+        margin: 16px;
+        padding: 20px;
+        border: 1px solid rgb(210, 216, 224);
+        border-radius: 12px;
+        background: rgb(255, 255, 255);
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
+      }
+
+      .primary {
+        padding: 10px 14px;
+        border: 0;
+        border-radius: 8px;
+        color: rgb(255, 255, 255);
+        background: rgb(30, 100, 216);
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .zero {
+        display: block;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="/buttons">Buttons</a>
+    </nav>
+    <main>
+      <article class="card" data-testid="plan-card">
+        <h1>Design plan</h1>
+        <p>Consistent spacing and radius.</p>
+        <button class="primary button">Start</button>
+        <button class="hidden">Hidden action</button>
+        <span class="zero">Zero size</span>
+      </article>
+    </main>
+  </body>
+</html>

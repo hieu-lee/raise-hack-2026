@@ -1,0 +1,6 @@
+{
+  "projectName": "Blank route URL fixture",
+  "baseUrl": "http://localhost:4173",
+  "routes": [{ "id": "home", "url": "   " }],
+  "tokenFiles": ["fixtures/config/tokens.css"]
+}

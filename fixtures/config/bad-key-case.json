@@ -1,0 +1,7 @@
+{
+  "projectName": "Bad key case fixture",
+  "baseUrl": "http://localhost:4173",
+  "routes": [{ "id": "Home", "url": "/" }],
+  "tokenFiles": ["fixtures/config/tokens.css"],
+  "viewports": [{ "name": "Desktop", "width": 1440, "height": 900 }]
+}

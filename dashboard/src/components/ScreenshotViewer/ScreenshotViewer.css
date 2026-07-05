@@ -1,0 +1,54 @@
+.screenshot-viewer {
+  margin: 0;
+}
+
+.screenshot-frame {
+  background: var(--dr-color-surface-muted);
+  border-radius: var(--dr-radius-md);
+  min-height: 220px;
+  overflow: auto;
+  position: relative;
+}
+
+.screenshot-frame img {
+  display: block;
+  max-width: none;
+}
+
+.crop-highlight {
+  border: 2px solid var(--dr-color-focus);
+  border-radius: 6px;
+  box-shadow: 0 0 0 9999px rgb(0 0 0 / 45%);
+  pointer-events: none;
+  position: absolute;
+}
+
+.screenshot-viewer figcaption {
+  color: var(--color-subtle);
+  font-size: 0.82rem;
+  margin-top: 0.5rem;
+}
+
+.screenshot-placeholder {
+  align-items: center;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--dr-color-surface-soft),
+    var(--dr-color-surface-soft) 12px,
+    var(--dr-color-surface-muted) 12px,
+    var(--dr-color-surface-muted) 24px
+  );
+  border-radius: var(--dr-radius-md);
+  color: var(--color-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-height: 220px;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+}
+
+.screenshot-placeholder strong {
+  color: var(--color-text);
+}

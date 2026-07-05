@@ -1,0 +1,6 @@
+{
+  "projectName": "Bad token fixture",
+  "baseUrl": "http://localhost:4173",
+  "routes": [{ "id": "home", "url": "/" }],
+  "tokenFiles": ["fixtures/tokens/malformed.json"]
+}

@@ -1,0 +1,6 @@
+{
+  "projectName": "Bad route URL fixture",
+  "baseUrl": "http://localhost:4173",
+  "routes": [{ "id": "home", "url": "http://[bad]" }],
+  "tokenFiles": ["fixtures/config/tokens.css"]
+}

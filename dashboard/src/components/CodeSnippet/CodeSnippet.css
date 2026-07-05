@@ -1,0 +1,85 @@
+.code-snippet {
+  background: #141414;
+  border-radius: var(--dr-radius-md);
+  color: #ececec;
+  margin: 0;
+  overflow: hidden;
+}
+
+.code-snippet figcaption,
+.code-snippet__label {
+  background: var(--dr-color-surface-muted);
+  border-bottom: 1px solid var(--dr-color-border);
+  color: var(--dr-color-subtle);
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.75rem;
+}
+
+.code-snippet pre {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  overflow-x: auto;
+  padding: 0.85rem;
+  background: transparent;
+  color: inherit;
+}
+
+.code-snippet code {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  white-space: pre;
+}
+
+.code-snippet__line {
+  display: block;
+  padding-left: 1.4em;
+}
+
+.code-snippet__line[data-marker]::before {
+  content: attr(data-marker);
+  display: inline-block;
+  width: 1.1em;
+  margin-left: -1.4em;
+  color: var(--dr-color-muted);
+  font-weight: 700;
+}
+
+.code-snippet--removed {
+  background: rgb(243 115 115 / 8%);
+}
+
+.code-snippet--removed .code-snippet__line[data-marker] {
+  background: rgb(243 115 115 / 14%);
+}
+
+.code-snippet--removed .code-snippet__line[data-marker]::before {
+  color: var(--dr-color-critical);
+}
+
+.code-snippet--added {
+  background: rgb(121 217 157 / 8%);
+}
+
+.code-snippet--added .code-snippet__line[data-marker] {
+  background: rgb(121 217 157 / 14%);
+}
+
+.code-snippet--added .code-snippet__line[data-marker]::before {
+  color: var(--dr-color-low);
+}
+
+.code-snippet--empty {
+  background: var(--color-muted);
+  color: var(--color-subtle);
+  padding-bottom: 0.7rem;
+}
+
+.code-snippet--empty p {
+  margin: 0.7rem 0.75rem 0;
+}

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+coverage/
+.driftradar/
+.hackathon_team/
+pnpm-lock.yaml
+PROJECT.md
+BACKEND.md
+FRONTEND.md

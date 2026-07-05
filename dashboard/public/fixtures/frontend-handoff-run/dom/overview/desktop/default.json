@@ -1,0 +1,32 @@
+{
+  "routeId": "overview",
+  "viewport": "desktop",
+  "state": "default",
+  "samples": [
+    {
+      "elementId": "overview-primary-action",
+      "selectorHint": ".primary-action",
+      "role": "button",
+      "tagName": "button",
+      "textSample": "Start scan",
+      "boundingBox": { "x": 32, "y": 96, "width": 156, "height": 44 },
+      "computed": {
+        "color": "#ffffff",
+        "backgroundColor": "#1f6fe5",
+        "borderColor": "#1f6fe5",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "600",
+        "lineHeight": "24px",
+        "letterSpacing": "0px",
+        "margin": "0px",
+        "padding": "10px 18px",
+        "gap": "8px",
+        "borderRadius": "999px",
+        "boxShadow": "0 8px 28px rgba(17, 24, 39, 0.12)",
+        "opacity": "1",
+        "cursor": "pointer"
+      }
+    }
+  ]
+}

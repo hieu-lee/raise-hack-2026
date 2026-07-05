@@ -1,0 +1,10 @@
+{
+  "typography": {
+    "empty": {
+      "$type": "typography",
+      "$value": {
+        "fontSze": "large"
+      }
+    }
+  }
+}

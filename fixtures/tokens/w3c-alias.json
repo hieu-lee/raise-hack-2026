@@ -1,0 +1,12 @@
+{
+  "color": {
+    "brand": {
+      "$type": "color",
+      "$value": "#1e64d8"
+    },
+    "semantic": {
+      "$type": "color",
+      "$value": "{color.brand}"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+.demo-callout {
+  display: block;
+  margin: 0 0 1.25rem;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid var(--dr-color-brand);
+  border-radius: var(--dr-radius-xs);
+  background: var(--dr-color-brand-soft);
+}
+
+.demo-callout strong {
+  display: block;
+  margin-bottom: 0.2rem;
+  color: var(--dr-color-brand-strong);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.demo-callout p {
+  margin: 0;
+  color: var(--dr-color-subtle);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}

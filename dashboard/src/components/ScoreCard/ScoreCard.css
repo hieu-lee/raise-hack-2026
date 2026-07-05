@@ -1,0 +1,59 @@
+.score-card {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 17px 20px 18px;
+  border-top: 2px solid var(--dr-color-border-strong);
+  border-radius: var(--dr-radius-md);
+  background: var(--dr-surface);
+  transition: background var(--dr-transition);
+}
+
+.score-card:hover {
+  background: var(--dr-color-surface-raised);
+}
+
+.score-card--critical {
+  border-top-color: var(--dr-critical);
+}
+
+.score-card--high {
+  border-top-color: var(--dr-high);
+}
+
+.score-card--medium {
+  border-top-color: var(--dr-medium);
+}
+
+.score-card--low {
+  border-top-color: var(--dr-low);
+}
+
+.score-card--good {
+  border-top-color: var(--dr-good);
+}
+
+.score-card__label,
+.score-card__detail {
+  margin: 0;
+  color: var(--dr-muted);
+}
+
+.score-card__label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.score-card__value {
+  color: var(--dr-text);
+  font-size: clamp(1.7rem, 1.2rem + 1vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.score-card__detail {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}

@@ -1,0 +1,11 @@
+{
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "$value": 123
+    }
+  },
+  "flatFont": {
+    "family": 123
+  }
+}

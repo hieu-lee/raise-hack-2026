@@ -1,0 +1,21 @@
+{
+  "color.accent": "#f97316",
+  "color.overlay": "rgba(0, 0, 0, 0.24)",
+  "spacing.inline": "12px",
+  "radii.pill": "999px",
+  "font.size.caption": "0.75rem",
+  "font.lineHeight.caption": "150%",
+  "shadow.popover": "0 4px 12px 0 rgb(0, 0, 0)",
+  "card.depth": {
+    "offsetX": "0px",
+    "offsetY": "2px",
+    "blur": "8px",
+    "spread": "0px",
+    "color": "rgba(0, 0, 0, 0.24)"
+  },
+  "text.compact": {
+    "fontFamily": "Inter",
+    "fontSize": "14px",
+    "lineHeight": "150%"
+  }
+}

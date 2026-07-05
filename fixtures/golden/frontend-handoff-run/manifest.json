@@ -1,0 +1,8 @@
+{
+  "runId": "frontend-handoff-run",
+  "projectName": "DriftRadar sample app",
+  "createdAt": "2026-07-03T13:00:00.000Z",
+  "status": "complete",
+  "artifactContract": "json",
+  "observationWriter": "storage"
+}

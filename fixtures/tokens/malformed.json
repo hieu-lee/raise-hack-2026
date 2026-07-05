@@ -1,0 +1,6 @@
+{
+  "color": {
+    "$type": "color",
+    "bad": { "$value": "#not-a-color" }
+  }
+}

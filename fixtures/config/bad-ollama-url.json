@@ -1,0 +1,11 @@
+{
+  "projectName": "Bad Ollama URL fixture",
+  "baseUrl": "http://localhost:4173",
+  "routes": [{ "id": "home", "url": "/" }],
+  "tokenFiles": ["fixtures/config/tokens.css"],
+  "ollama": {
+    "enabled": true,
+    "baseUrl": "ftp://localhost:11434",
+    "model": "llama"
+  }
+}

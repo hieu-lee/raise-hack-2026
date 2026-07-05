@@ -1,0 +1,38 @@
+{
+  "color": {
+    "overlay": {
+      "$type": "color",
+      "$value": "rgba(0, 0, 0, 0.24)"
+    },
+    "semanticOverlay": {
+      "$type": "color",
+      "$value": "{color.overlay}"
+    }
+  },
+  "space": {
+    "2": {
+      "$type": "dimension",
+      "$value": "2px"
+    },
+    "semantic2": {
+      "$type": "dimension",
+      "$value": "{space.2}"
+    },
+    "8": {
+      "$type": "dimension",
+      "$value": "8px"
+    }
+  },
+  "shadow": {
+    "overlay": {
+      "$type": "shadow",
+      "$value": {
+        "offsetX": "0px",
+        "offsetY": "{space.semantic2}",
+        "blur": "{space.8}",
+        "spread": "0px",
+        "color": "{color.semanticOverlay}"
+      }
+    }
+  }
+}

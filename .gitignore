@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+.vitest/
+.driftradar/
+.hackathon_team/logs/
+playwright-report/
+test-results/
+.DS_Store
+*.log
+*.tsbuildinfo
+!.gitkeep

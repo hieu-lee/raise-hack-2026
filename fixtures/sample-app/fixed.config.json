@@ -1,0 +1,9 @@
+{
+  "projectName": "DriftRadar fixed sample app",
+  "baseUrl": "http://127.0.0.1:4173",
+  "routes": [{ "id": "fixed", "url": "/fixed.html", "label": "Fixed drift" }],
+  "tokenFiles": ["sample-app/tokens.css"],
+  "outputDir": ".driftradar",
+  "viewports": [{ "name": "desktop", "width": 1440, "height": 900 }],
+  "states": ["default", "focus"]
+}

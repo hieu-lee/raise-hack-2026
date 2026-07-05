@@ -1,0 +1,14 @@
+{
+  "projectName": "Duplicate keys fixture",
+  "baseUrl": "http://localhost:4173",
+  "routes": [
+    { "id": "home", "url": "/" },
+    { "id": "home", "url": "/again" }
+  ],
+  "tokenFiles": ["fixtures/config/tokens.css"],
+  "viewports": [
+    { "name": "desktop", "width": 1440, "height": 900 },
+    { "name": "desktop", "width": 1280, "height": 720 }
+  ],
+  "states": ["default", "default"]
+}

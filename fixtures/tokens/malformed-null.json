@@ -1,0 +1,8 @@
+{
+  "color": {
+    "missing": {
+      "$type": "color",
+      "$value": null
+    }
+  }
+}

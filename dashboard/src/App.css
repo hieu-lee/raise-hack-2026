@@ -1,0 +1,25 @@
+.placeholder-screen {
+  border: 1px solid var(--dr-color-border);
+  border-radius: var(--dr-radius-sm);
+  padding: clamp(var(--dr-space-8), 5vw, 44px);
+  background: var(--dr-color-surface);
+}
+
+.placeholder-screen__eyebrow {
+  margin: 0 0 var(--dr-space-2);
+  color: var(--dr-color-muted);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.placeholder-screen h1 {
+  margin: 0 0 var(--dr-space-4);
+  color: var(--dr-color-text);
+  font-size: clamp(32px, 5vw, 48px);
+}
+
+.placeholder-screen p:last-child {
+  max-width: 680px;
+  color: var(--dr-color-subtle);
+}

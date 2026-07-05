@@ -1,0 +1,23 @@
+{
+  "typography": {
+    "bad": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Inter",
+        "fontSize": null
+      }
+    }
+  },
+  "shadow": {
+    "bad": {
+      "$type": "shadow",
+      "$value": {
+        "offsetX": "0px",
+        "offsetY": "1px",
+        "blur": "2px",
+        "spread": null,
+        "color": "#000000"
+      }
+    }
+  }
+}

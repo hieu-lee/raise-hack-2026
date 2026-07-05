@@ -1,0 +1,25 @@
+:root {
+  --color-primary-600: #1e64d8;
+  --color-surface: rgb(255, 255, 255);
+  --space-2: 8px;
+  --radius-card: 0.5rem;
+  --font-family-sans: "Inter", sans-serif;
+  --font-size-body: 1rem;
+  --font-weight-semibold: 600;
+  --line-height-body: 1.5;
+  --shadow-card: 0 2px 8px 0 rgba(0, 0, 0, 0.24);
+}
+
+[data-theme="dark"] {
+  --color-surface: #0f172a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary-600: #93c5fd;
+  }
+}
+
+.button {
+  --color-ignored: #ff0000;
+}

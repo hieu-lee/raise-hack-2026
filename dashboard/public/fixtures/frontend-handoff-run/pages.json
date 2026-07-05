@@ -1,0 +1,46 @@
+[
+  {
+    "routeId": "buttons",
+    "viewport": "desktop",
+    "state": "default",
+    "screenshotPath": "screenshots/buttons/desktop/default.png",
+    "capturedAt": "2026-07-03T13:00:00.000Z",
+    "browser": {
+      "name": "chromium",
+      "version": "demo-fixture"
+    }
+  },
+  {
+    "routeId": "cards",
+    "viewport": "desktop",
+    "state": "default",
+    "screenshotPath": "screenshots/cards/desktop/default.png",
+    "capturedAt": "2026-07-03T13:00:00.000Z",
+    "browser": {
+      "name": "chromium",
+      "version": "demo-fixture"
+    }
+  },
+  {
+    "routeId": "forms",
+    "viewport": "desktop",
+    "state": "focus",
+    "screenshotPath": "screenshots/forms/desktop/focus.png",
+    "capturedAt": "2026-07-03T13:00:00.000Z",
+    "browser": {
+      "name": "chromium",
+      "version": "demo-fixture"
+    }
+  },
+  {
+    "routeId": "dark",
+    "viewport": "desktop",
+    "state": "dark",
+    "screenshotPath": "screenshots/dark/desktop/dark.png",
+    "capturedAt": "2026-07-03T13:00:00.000Z",
+    "browser": {
+      "name": "chromium",
+      "version": "demo-fixture"
+    }
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "space": {
+    "dot": {
+      "$type": "dimension",
+      "$value": ".5rem"
+    }
+  },
+  "radius": {
+    "dot": {
+      "$type": "borderRadius",
+      "$value": ".25rem"
+    }
+  },
+  "font": {
+    "lineHeight": {
+      "$type": "lineHeight",
+      "$value": ".5"
+    }
+  }
+}

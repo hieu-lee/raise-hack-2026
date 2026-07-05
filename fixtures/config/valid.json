@@ -1,0 +1,6 @@
+{
+  "projectName": "DriftRadar fixture",
+  "baseUrl": "http://localhost:4173",
+  "routes": [{ "id": "home", "url": "/", "label": "Home" }],
+  "tokenFiles": ["fixtures/config/tokens.css"]
+}

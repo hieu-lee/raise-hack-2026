@@ -1,0 +1,6 @@
+{
+  "projectName": "Missing token fixture",
+  "baseUrl": "http://localhost:4173",
+  "routes": [{ "id": "home", "url": "/" }],
+  "tokenFiles": ["fixtures/config/missing.css"]
+}

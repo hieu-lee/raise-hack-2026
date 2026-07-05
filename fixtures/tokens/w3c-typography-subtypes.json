@@ -1,0 +1,22 @@
+{
+  "text": {
+    "body": {
+      "$type": "fontFamily",
+      "$value": "Inter"
+    }
+  },
+  "font": {
+    "size": {
+      "body": {
+        "$type": "dimension",
+        "$value": "18px"
+      }
+    },
+    "lineHeight": {
+      "body": {
+        "$type": "dimension",
+        "$value": "28px"
+      }
+    }
+  }
+}

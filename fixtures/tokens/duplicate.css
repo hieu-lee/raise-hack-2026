@@ -1,0 +1,10 @@
+:root {
+  --space-2: 4px;
+  --space-2: 8px;
+  --space-dot: 0.5rem;
+  --color-primary: #000000;
+  --color-primary: #not-a-color;
+  --color-primary: #ffffff;
+  --border-radius-sm: 4px;
+  --radius-dot: 0.25rem;
+}

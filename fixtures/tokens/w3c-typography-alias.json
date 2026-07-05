@@ -1,0 +1,45 @@
+{
+  "font": {
+    "family": {
+      "body": {
+        "$type": "fontFamily",
+        "$value": "Inter"
+      }
+    },
+    "size": {
+      "body": {
+        "$type": "dimension",
+        "$value": "16px"
+      },
+      "semantic": {
+        "$type": "dimension",
+        "$value": "{font.size.body}"
+      }
+    },
+    "lineHeight": {
+      "body": {
+        "$type": "dimension",
+        "$value": "150%"
+      },
+      "semantic": {
+        "$type": "dimension",
+        "$value": "{font.lineHeight.body}"
+      }
+    }
+  },
+  "typography": {
+    "body": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.body}",
+        "fontSize": "{font.size.semantic}",
+        "lineHeight": "{font.lineHeight.semantic}",
+        "fontWeight": 600
+      }
+    },
+    "semantic": {
+      "$type": "typography",
+      "$value": "{typography.body}"
+    }
+  }
+}
